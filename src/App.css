@@ -1,0 +1,6 @@
+/* App-level styles */
+
+/* The reference footer uses Instagram, Facebook, and LinkedIn only. */
+footer > div > div > div:last-child > div:last-child > a[aria-label="Airbnb"] {
+	display: none;
+}

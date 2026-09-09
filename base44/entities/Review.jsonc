@@ -1,0 +1,80 @@
+{
+  "name": "Review",
+  "type": "object",
+  "properties": {
+    "property_id": {
+      "type": "string",
+      "description": "ID of the property being reviewed"
+    },
+    "guest_name": {
+      "type": "string",
+      "description": "Name of the guest leaving the review"
+    },
+    "guest_email": {
+      "type": "string",
+      "description": "Email of the guest"
+    },
+    "rating": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 5,
+      "description": "Rating from 1 to 5 stars"
+    },
+    "title": {
+      "type": "string",
+      "description": "Review title"
+    },
+    "comment": {
+      "type": "string",
+      "description": "Review comment"
+    },
+    "stay_date": {
+      "type": "string",
+      "description": "Date of stay"
+    },
+    "approval_status": {
+      "type": "string",
+      "enum": ["pending", "approved", "rejected"],
+      "default": "pending",
+      "description": "Admin moderation state before a review is shown publicly"
+    },
+    "source": {
+      "type": "string",
+      "description": "Submission source, such as website_review_form"
+    }
+  },
+  "required": [
+    "property_id",
+    "guest_name",
+    "rating",
+    "comment"
+  ],
+  "rls": {
+    "create": null,
+    "read": null,
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

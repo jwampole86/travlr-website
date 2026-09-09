@@ -1,0 +1,116 @@
+{
+  "name": "Property",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Property name"
+    },
+    "slug": {
+      "type": "string",
+      "description": "URL slug (kebab-case) from the original site"
+    },
+    "location": {
+      "type": "string",
+      "description": "Property location / area"
+    },
+    "bedrooms": {
+      "type": "number",
+      "description": "Number of bedrooms"
+    },
+    "beds": {
+      "type": "number",
+      "description": "Total number of beds (sleeping surfaces)"
+    },
+    "bathrooms": {
+      "type": "number",
+      "description": "Number of bathrooms"
+    },
+    "guests": {
+      "type": "number",
+      "description": "Maximum guest count"
+    },
+    "price_per_night": {
+      "type": "number",
+      "description": "Discounted nightly rate (USD) including taxes & fees, used for date-based estimates"
+    },
+    "rack_rate_per_night": {
+      "type": "number",
+      "description": "Pre-discount nightly rate (USD) used to show the strikethrough original price"
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed property description"
+    },
+    "amenities": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of amenities / property highlights"
+    },
+    "images": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Array of image URLs"
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether property is featured"
+    },
+    "property_type": {
+      "type": "string",
+      "enum": [
+        "house",
+        "condo",
+        "villa",
+        "estate",
+        "cabin",
+        "penthouse",
+        "chalet"
+      ],
+      "description": "Type of property"
+    },
+    "pet_friendly": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether pets are allowed"
+    },
+    "wheelchair_accessible": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether property is wheelchair accessible"
+    },
+    "ai_description": {
+      "type": "string",
+      "description": "AI-generated compelling description"
+    }
+  },
+  "required": [
+    "name",
+    "location",
+    "bedrooms",
+    "bathrooms"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

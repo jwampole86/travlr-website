@@ -1,0 +1,78 @@
+{
+  "name": "JobApplication",
+  "type": "object",
+  "properties": {
+    "applicant_name": {
+      "type": "string",
+      "description": "Full name of the applicant"
+    },
+    "email": {
+      "type": "string",
+      "description": "Applicant email address"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Applicant phone number (optional)"
+    },
+    "role_title": {
+      "type": "string",
+      "description": "Title of the role the applicant applied to"
+    },
+    "role_slug": {
+      "type": "string",
+      "description": "Slug of the role the applicant applied to"
+    },
+    "note": {
+      "type": "string",
+      "description": "Applicant's cover note submitted with the application"
+    },
+    "resume_url": {
+      "type": "string",
+      "description": "URL to the uploaded resume file"
+    },
+    "starred": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this candidate has been flagged/starred as a top applicant"
+    },
+    "private_notes": {
+      "type": "string",
+      "description": "Internal notes visible only to admins during the hiring process"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "new",
+        "reviewed",
+        "interview",
+        "rejected",
+        "hired"
+      ],
+      "default": "new",
+      "description": "Pipeline status for tracking the application"
+    }
+  },
+  "required": [
+    "applicant_name",
+    "email",
+    "role_title"
+  ],
+  "rls": {
+    "create": null,
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
