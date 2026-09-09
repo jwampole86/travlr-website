@@ -20,3 +20,9 @@ footer > div > div > div:last-child > div:last-child > a[aria-label="Airbnb"] {
 		margin-right: auto !important;
 	}
 }
+
+@media (min-width: 640px) {
+	main a[href^="/areas/"] h3 {
+		font-size: 1.125rem;
+	}
+}
