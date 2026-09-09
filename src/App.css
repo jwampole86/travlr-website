@@ -26,3 +26,52 @@ footer > div > div > div:last-child > div:last-child > a[aria-label="Airbnb"] {
 		font-size: 1.125rem;
 	}
 }
+
+@media (min-width: 1024px) and (max-width: 1199px) {
+	nav:has(img[alt="TRAVLR Vacation Homes"]) {
+		padding-left: 1rem !important;
+		padding-right: 1rem !important;
+	}
+
+	nav:has(img[alt="TRAVLR Vacation Homes"]) > div {
+		gap: 1rem !important;
+		font-size: 9px;
+		letter-spacing: 0.08em;
+	}
+
+	nav:has(img[alt="TRAVLR Vacation Homes"]) img[alt="TRAVLR Vacation Homes"] {
+		width: 88px !important;
+		height: 88px !important;
+	}
+}
+
+@media (min-width: 1200px) and (max-width: 1279px) {
+	nav:has(img[alt="TRAVLR Vacation Homes"]) {
+		padding-left: 2rem !important;
+		padding-right: 2rem !important;
+	}
+
+	nav:has(img[alt="TRAVLR Vacation Homes"]) > div {
+		gap: 1rem !important;
+		font-size: 10px;
+		letter-spacing: 0.1em;
+	}
+
+	nav:has(img[alt="TRAVLR Vacation Homes"]) img[alt="TRAVLR Vacation Homes"] {
+		width: 88px !important;
+		height: 88px !important;
+	}
+}
+
+@media (min-width: 1280px) and (max-width: 1399px) {
+	nav:has(img[alt="TRAVLR Vacation Homes"]) > div {
+		gap: 1.25rem !important;
+		font-size: 10px;
+		letter-spacing: 0.1em;
+	}
+
+	nav:has(img[alt="TRAVLR Vacation Homes"]) img[alt="TRAVLR Vacation Homes"] {
+		width: 104px !important;
+		height: 104px !important;
+	}
+}

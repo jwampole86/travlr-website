@@ -39,7 +39,7 @@ const partners = [
   ["Airbnb Superhost", "4f6bb1968_AIRBNB.png", "https://www.airbnb.com/users/profile/1462768828819189174?previous_page_name=PdpHomeMarketplace"],
   ["California Association of Realtors", "31c43f327_CAR.png", "https://www.car.org"],
   ["CSA Travel Protection", "3bf207dc3_CSA2.png", "https://www.csatravelprotection.com"],
-  ["VRBO Premier Host", "28bdaba57_VRBOcopy.png", "https://www.vrbo.com"],
+  ["VRBO Premier Host", "28bdaba57_VRBOcopy.png", "https://www.vrbo.com/2756367"],
   ["VRMA", "8d101912c_VMRA.png", "https://www.vrma.org"],
   ["Lynnbrook", "ec5ac30a6_Lynnbrookcopy.png", "https://lynnbrookhospitality.com"],
 ].map(([alt, file, href]) => [alt, `https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68f9945aff077ee02e61835e/${file}`, href]);
