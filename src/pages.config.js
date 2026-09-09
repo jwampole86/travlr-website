@@ -8,6 +8,7 @@
  * This controls which page is the landing page (shown when users visit the app).
  */
 import About from './pages/About';
+import AboutReference from './pages/AboutReference';
 import Activities from './pages/Activities';
 import Contact from './pages/Contact';
 import GuestResources from './pages/GuestResources';
@@ -20,7 +21,7 @@ import HomeReference from './pages/HomeReference';
 
 
 export const PAGES = {
-    "About": About,
+    "About": AboutReference,
     "Activities": Activities,
     "Contact": Contact,
     "GuestResources": GuestResources,

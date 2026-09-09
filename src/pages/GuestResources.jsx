@@ -1,30 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
-import { ChevronLeft, HelpCircle, FileText, Shield } from "lucide-react";
+import { ChevronDown, ChevronLeft, HelpCircle, FileText, Shield } from "lucide-react";
 
 export default function GuestResources() {
   const navigate = useNavigate();
+  const [openFaq, setOpenFaq] = useState(0);
   const faqs = [
     {
-      question: "What is your cancellation policy?",
-      answer: "Our cancellation policy varies by property. Most properties offer a full refund if cancelled 30 days before check-in. Please review the specific policy for your selected property."
+      question: "What time is check-in and check out?",
+      answer: "Check in is after 3 PM local time, and check out is no later than 11 AM. Early check in and late check out may be available for your reservation upon request. Please reach out for cost and availability."
     },
     {
-      question: "When can I check in and out?",
-      answer: "Standard check-in time is 4:00 PM and check-out is 11:00 AM. Early check-in or late check-out may be available upon request for an additional fee."
+      question: "Will I need to meet the property manager to get a key?",
+      answer: "Most TRAVLR homes use convenient self check-in with access instructions delivered before arrival. If a personal welcome or key handoff is needed for your home, our team will coordinate it with you in advance."
     },
     {
-      question: "Are pets allowed?",
-      answer: "Select properties are pet-friendly. Use our advanced filters to find pet-friendly options. Additional pet fees may apply."
+      question: "Do you provide daily cleaning service?",
+      answer: "Daily housekeeping can be added to your stay for an additional fee, subject to availability. Ask our concierge team to arrange cleaning around your schedule."
     },
     {
-      question: "Is there parking available?",
-      answer: "Most properties include complimentary parking. Specific parking details are provided in each property's amenities list."
+      question: "Can we have the pool heated?",
+      answer: "Pool heating is available at select homes and may require an additional fee. Contact us before arrival so we can confirm availability and arrange it for your dates."
     },
     {
-      question: "How do I get the keys?",
-      answer: "We'll provide detailed check-in instructions via email 48 hours before your arrival, including access codes or key pickup information."
+      question: "What is provided with my accommodations?",
+      answer: "Homes include linens, towels, kitchen basics, and the amenities listed on the property's page. Your pre-arrival information will include home-specific details and anything you may want to bring."
+    },
+    {
+      question: "May I ship a package to my vacation home?",
+      answer: "Package delivery can often be coordinated, but arrangements vary by home and arrival timing. Contact our concierge before shipping anything so we can confirm the correct address and delivery plan."
+    },
+    {
+      question: "Do you allow pets?",
+      answer: "Some homes are pet-friendly. Please confirm the home's policy before booking, and note that additional pet fees or restrictions may apply."
+    },
+    {
+      question: "What is the cancellation policy?",
+      answer: "Cancellation terms vary by property and are shown with your reservation details. Please review the specific policy for your selected home before booking, or contact our team with questions."
     }
   ];
 
@@ -43,7 +56,7 @@ export default function GuestResources() {
       {/* Hero */}
       <div className="h-[400px] w-full bg-[#3a3a3a] flex items-center justify-center">
         <h1 className="text-3xl md:text-5xl font-light tracking-[0.15em] md:tracking-[0.2em] text-white text-center px-4">
-          GUEST RESOURCES
+          FAQS
         </h1>
       </div>
 
@@ -60,20 +73,19 @@ export default function GuestResources() {
 
         <div className="space-y-6 mb-16">
           {faqs.map((faq, idx) => (
-            <div key={idx} className="bg-[#f8f6f3] p-6 rounded-sm">
-              <div className="flex items-start gap-4">
-                <HelpCircle className="w-6 h-6 text-[#b89968] flex-shrink-0 mt-1" />
-                <div>
-                  <h3 className="text-lg font-medium text-gray-800 mb-2">
-                    {faq.question}
-                  </h3>
-                  <p className="text-gray-600 leading-relaxed tracking-wide">
-                    {faq.answer}
-                  </p>
-                </div>
-              </div>
+            <div key={idx} className="border-b border-gray-200">
+              <button type="button" onClick={() => setOpenFaq(openFaq === idx ? -1 : idx)} aria-expanded={openFaq === idx} className="flex w-full items-center justify-between gap-4 py-5 text-left">
+                <span className="flex items-center gap-4"><HelpCircle className="h-5 w-5 flex-shrink-0 text-[#b89968]" /><span className="text-base font-medium uppercase tracking-[0.08em] text-gray-800">{faq.question}</span></span>
+                <ChevronDown className={`h-5 w-5 flex-shrink-0 text-[#b89968] transition-transform ${openFaq === idx ? "rotate-180" : ""}`} />
+              </button>
+              {openFaq === idx && <p className="pb-6 pl-9 text-gray-600 leading-relaxed tracking-wide">{faq.answer}</p>}
             </div>
           ))}
+        </div>
+
+        <div className="mb-12 flex flex-col items-center justify-between gap-5 bg-[#d8c09a] px-6 py-8 text-center sm:flex-row sm:text-left md:mb-16 md:px-10">
+          <div><p className="text-xs font-medium uppercase tracking-[0.2em] text-[#705d41]">Ready to make the most of your stay?</p><h2 className="mt-2 text-2xl font-light tracking-wider text-[#3d4a53]">Start your vacation now.</h2></div>
+          <Link to={createPageUrl("SearchResults")} className="inline-flex items-center bg-[#5d6670] px-6 py-4 text-xs font-medium uppercase tracking-[0.18em] text-white hover:bg-[#46515a]">Explore Collection</Link>
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">

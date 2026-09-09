@@ -94,6 +94,18 @@ export default function Activities() {
     }
   ];
 
+  const guideLinks = [
+    ["Journeys to Palm Springs", "https://www.staytravlr.com/see-and-do/journeys-to-palm-springs/"],
+    ["Palm Desert Travel Information", "https://www.staytravlr.com/see-and-do/palm-desert-travel-information/"],
+    ["Dine", "https://www.staytravlr.com/see-and-do/dine/"],
+    ["Hike", "https://www.staytravlr.com/see-and-do/hiking-palm-desert/"],
+    ["Palm Desert Shops", "https://www.staytravlr.com/see-and-do/palm-desert-shops/"],
+    ["Tennis", "https://www.staytravlr.com/see-and-do/tennis/"],
+    ["Golf", "https://www.staytravlr.com/see-and-do/golf/"],
+    ["Music Festivals", "https://www.staytravlr.com/see-and-do/music-festivals/"],
+    ["Sporting Events", "https://www.staytravlr.com/see-and-do/sporting-events/"],
+  ];
+
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
@@ -138,6 +150,8 @@ export default function Activities() {
           with gear, guides, reservations, and private experiences arranged before you arrive.
         </p>
       </div>
+
+      <div className="mx-auto max-w-[1200px] px-6 pb-6"><div className="flex flex-wrap justify-center gap-2 border-y border-gray-200 py-5">{guideLinks.map(([label, href]) => <a key={label} href={href} target="_blank" rel="noopener noreferrer" className="border border-gray-200 px-4 py-2 text-[10px] font-medium uppercase tracking-[0.14em] text-gray-600 transition-colors hover:border-[#b89968] hover:text-[#b89968]">{label}</a>)}</div></div>
 
       {/* Activities Grid */}
       <div className="max-w-[1400px] mx-auto px-6 py-10 md:py-16">

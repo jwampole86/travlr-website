@@ -4,3 +4,19 @@
 footer > div > div > div:last-child > div:last-child > a[aria-label="Airbnb"] {
 	display: none;
 }
+
+@media (max-width: 639px) {
+	main > section:first-of-type form > button {
+		width: calc(100% - 2rem) !important;
+		margin-left: auto !important;
+		margin-right: auto !important;
+	}
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+	main > section:first-of-type form > button {
+		width: calc(100% - 3rem) !important;
+		margin-left: auto !important;
+		margin-right: auto !important;
+	}
+}
