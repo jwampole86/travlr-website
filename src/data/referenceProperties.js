@@ -1,5 +1,5 @@
 const referenceProperties = [
-  ["6aa0f8640be251ea460dcf80", "Big Sky Luxe Mountain Retreat", "Big Sky, Montana", 6, 7, 5070, "https://images.casago.com/unit-images/pal/1037111/0.jpg?w=1600&fit=max&q=80&auto=format,compress", true],
+  ["6aa0f8640be251ea460dcf80", "Big Sky Luxe Mountain Retreat", "Big Sky, Montana", 6, 7, 5070, "https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=1600&q=80", true],
   ["6aa0f8640be251ea460dcf81", "Tangerine Sky", "Scottsdale, Arizona", 6, 3, 1122, "https://images.casago.com/unit-images/pal/1041831/173615436.jpeg?w=1600&fit=max&q=80&auto=format,compress", false],
   ["6aa0f8640be251ea460dcf82", "The Mountain Watch", "Fountain Hills, Arizona", 4, 3.5, 489, "https://images.casago.com/unit-images/pal/1049280/174276929.jpeg?w=1600&fit=max&q=80&auto=format,compress", false],
   ["6aa0f8640be251ea460dcf83", "The Watch Tower", "Fountain Hills, Arizona", 3, 2.5, 391, "https://images.casago.com/unit-images/pal/1049279/174276673.jpeg?w=1600&fit=max&q=80&auto=format,compress", false],
