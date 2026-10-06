@@ -2,7 +2,6 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight, ChevronLeft } from "lucide-react";
 import { createPageUrl } from "@/utils";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const sections = [
   { eyebrow: "The TRAVLR Difference", title: "Elevate Your Expectation", copy: ["TRAVLR Vacation Homes elevates design and service for the new modern traveler. With iconic destinations, thoughtfully curated homes, and attentive service, TRAVLR ushers in a new era of luxury hospitality for group travel.", "Whether you are traveling with your family on a weeklong spring break trip to Palm Springs, or looking for a romantic escape in La Quinta for just the two of you, it is the simple things that are most important. TRAVLR Vacation Homes welcomes you to revel in time together tasting local, freshly picked dates from a farm in Indio, adventure in a hot air balloon through the warm desert sky or lounge fireside at your private villa sharing stories over gooey S'mores. We have curated spaces that encourage fulfilling, shared experiences that connect you to the people you love, local culture, and the beauty of the California desert, all while making memories and dreams at your own private vacation residence."], image: "https://www.staytravlr.com/wp-content/uploads/2022/12/5J1A9175.jpg" },
@@ -11,18 +10,79 @@ const sections = [
   { eyebrow: "The TRAVLR Story", title: "It began with an inspired moment...", copy: ["More than a decade ago, Jen and Spencer took a much-anticipated vacation with their family to La Quinta, CA. While the desert sunsets and views of the Santa Rosa mountains were breathtaking, the young couple wasn't completely satisfied with the experience -- Spencer spent his nights slumped into the center of the caved-in mattress, Jen became the family concierge spending all her time researching, calling and making arrangements for the group entertainment, and the entire family embarrassingly huddled in dining chairs around the coveted living room love seat to watch a movie together in the evenings.", "They spent their vacation dreaming and collaborating about ways to enhance this group travel experience -- creating more open concept spaces, outfitting furniture and amenities suitable to accommodate the occupancy of the home, a large kitchen to prepare meals for the kids, and more personalized insights about the best ways to explore the local community.", "Ultimately, the couple took a leap and quit their careers in digital marketing and law to establish a company that combined the luxury, space, and character of private vacation homes with personalized service, modern technology and a host of resort-style amenities that only 5-star hotels have traditionally offered before.", "Today, TRAVLR is changing the way families, friends and companies experience the world through reunions, retreats or a weekend getaway. TRAVLR has also developed an unparalleled program for luxury homeowners to manage their vacation properties by offering an effortless ownership solution."], image: "https://www.staytravlr.com/wp-content/uploads/2023/09/AIM_Media_Group_LOW-54-e1695253207106.jpg" },
 ];
 
-const team = [
-  { name: "Jennifer Wampole", role: "Founder & Owner", image: "/team/margaret-s.jpg", bio: "Jennifer W. founded TRAVLR to bring boutique-luxury hospitality to private vacation homes. She leads the company's culture, guest standard, and homeowner promise with a focus on integrity, design, and thoughtful service." },
-  { name: "Spencer Wampole", role: "Co-Founder & Owner", image: "/team/spencer-w.jpg", bio: "Spencer W. partners with Jennifer on TRAVLR's long-term growth, operations, and owner relationships. His strategic approach helps turn luxury homeowner partnerships into consistently elevated guest stays." },
-  { name: "Shane Goering", role: "Outreach & Business Development Manager", image: "/team/shane-goering-v2.jpg", bio: "Shane G. leads outreach and business development, building relationships that expand TRAVLR's market presence. His proactive networking helps connect the company with the right owners, partners, and growth opportunities." },
-  { name: "Margaret Stone", role: "Head of Property Operations", image: "/team/jennifer-w.jpg", bio: "Margaret S. oversees day-to-day property operations across the portfolio. Her sharp eye for detail keeps property standards high, teams coordinated, and each home ready for a seamless guest experience." },
-  { name: "Jeremy Mihiu", role: "Revenue & Automation Systems", image: "/team/jeremy-mihiu.webp", zoom: 1.5, bio: "Jeremy M. designs the automation behind lead response, follow-up, and revenue reporting. His systems keep every inquiry captured and performance visible month over month." },
-  { name: "Parker Strahler", role: "Operations / Guest Experience Lead", image: "/team/parker-strahler.jpg", bio: "Parker S. bridges property logistics with the guest experience. He coordinates cleaning, maintenance, and guest service handoffs so every stay feels effortless from turnover to check-in." },
-  { name: "Tammy Heeren", role: "Guest Services / Concierge Lead", image: "/team/tammy-heeren.jpg", bio: "Tammy H. leads guest services and concierge support with a warm, high-touch approach. From check-in coordination to in-stay needs, she helps every guest feel cared for from arrival to departure." },
-  { name: "Hannah Paxton", role: "Cleaning & Turnover Lead", image: "/team/hannah-paxton.jpg", bio: "Hannah P. leads cleaning and turnover quality control across the portfolio. Her consistency and attention to detail create the spotless first impression guests expect when they walk through the door." },
-];
-
 export default function AboutReference() {
   const navigate = useNavigate();
-  return <main className="min-h-screen bg-white text-gray-700"><div className="border-b border-gray-200 bg-white py-4"><div className="mx-auto max-w-[1400px] px-6"><button onClick={() => navigate(-1)} className="inline-flex items-center text-sm text-gray-600 transition-colors hover:text-[#b89968]"><ChevronLeft className="mr-1 h-4 w-4" />Back</button></div></div><section className="relative h-[400px] w-full overflow-hidden md:h-[480px]"><img src="https://www.staytravlr.com/wp-content/uploads/2022/10/travlr-bedroom.jpg" alt="Luxury TRAVLR vacation home" className="h-full w-full object-cover" /><div className="absolute inset-0 bg-black/40" /><div className="absolute inset-0 flex items-center justify-center"><h1 className="px-4 text-center text-3xl font-light tracking-[0.2em] text-white md:text-5xl">ABOUT US</h1></div></section><div className="mx-auto max-w-[1200px] px-6 py-16 md:py-24">{sections.map((section, index) => <section key={section.title} className={`grid gap-10 md:grid-cols-2 md:items-center ${index % 2 ? "md:[&>div:first-child]:order-2" : ""} ${index ? "mt-20 md:mt-28" : ""}`}><div><p className="text-xs font-medium uppercase tracking-[0.22em] text-[#b89968]">{section.eyebrow}</p><h2 className="mt-4 text-3xl font-light tracking-wider text-gray-800 md:text-4xl">{section.title}</h2>{section.copy.map((paragraph) => <p key={paragraph.slice(0,30)} className="mt-5 leading-8 tracking-wide text-gray-600">{paragraph}</p>)}{index === 2 && <Link to={createPageUrl("SearchResults")} className="mt-7 inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] text-[#b89968]">Stay With Us <ArrowRight className="h-4 w-4" /></Link>}{index === 3 && <Link to={createPageUrl("Contact")} className="mt-7 inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] text-[#b89968]">Contact Us <ArrowRight className="h-4 w-4" /></Link>}</div><img src={section.image} alt={section.title} className="aspect-[1.25] w-full rounded-sm object-cover" /></section>)}<section className="mt-20 md:mt-28"><p className="text-center text-xs font-medium uppercase tracking-[0.22em] text-[#b89968]">Meet The Team</p><h2 className="mt-4 text-center text-3xl font-light tracking-wider text-gray-800 md:text-4xl">The People Behind TRAVLR</h2><div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">{team.map((member) => <div key={member.name} className="text-center"><Avatar className="mx-auto aspect-[4/5] h-auto w-36 rounded-lg"><AvatarImage src={member.image} alt={member.name} style={{ transform: `scale(${member.zoom || 1})` }} className="rounded-lg object-cover object-top" /><AvatarFallback className="rounded-lg bg-[#f2ede4] text-lg font-light tracking-wider text-[#b89968]">{member.name.split(" ").map((part) => part[0]).join("")}</AvatarFallback></Avatar><h3 className="mt-5 text-lg font-medium tracking-wide text-gray-800">{member.name}</h3><p className="mt-1 text-xs font-medium uppercase tracking-[0.14em] text-[#b89968]">{member.role}</p><p className="mt-4 text-sm leading-7 tracking-wide text-gray-600">{member.bio}</p></div>)}</div></section></div></main>;
+  return (
+    <main className="min-h-screen bg-white text-gray-700">
+      <div className="border-b border-gray-200 bg-white py-4">
+        <div className="mx-auto max-w-[1400px] px-6">
+          <button
+            onClick={() => navigate(-1)}
+            className="inline-flex items-center text-sm text-gray-600 transition-colors hover:text-[#b89968]"
+          >
+            <ChevronLeft className="mr-1 h-4 w-4" />Back
+          </button>
+        </div>
+      </div>
+      <section className="relative h-[400px] w-full overflow-hidden md:h-[480px]">
+        <img
+          src="https://www.staytravlr.com/wp-content/uploads/2022/10/travlr-bedroom.jpg"
+          alt="Luxury TRAVLR vacation home"
+          className="h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <h1 className="px-4 text-center text-3xl font-light tracking-[0.2em] text-white md:text-5xl">
+            ABOUT US
+          </h1>
+        </div>
+      </section>
+      <div className="mx-auto max-w-[1200px] px-6 py-16 md:py-24">
+        {sections.map((section, index) => (
+          <section
+            key={section.title}
+            className={`grid gap-10 md:grid-cols-2 md:items-center ${index % 2 ? "md:[&>div:first-child]:order-2" : ""} ${index ? "mt-20 md:mt-28" : ""}`}
+          >
+            <div>
+              <p className="text-xs font-medium uppercase tracking-[0.22em] text-[#b89968]">
+                {section.eyebrow}
+              </p>
+              <h2 className="mt-4 text-3xl font-light tracking-wider text-gray-800 md:text-4xl">
+                {section.title}
+              </h2>
+              {section.copy.map((paragraph) => (
+                <p
+                  key={paragraph.slice(0, 30)}
+                  className="mt-5 leading-8 tracking-wide text-gray-600"
+                >
+                  {paragraph}
+                </p>
+              ))}
+              {index === 2 && (
+                <Link
+                  to={createPageUrl("SearchResults")}
+                  className="mt-7 inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] text-[#b89968]"
+                >
+                  Stay With Us <ArrowRight className="h-4 w-4" />
+                </Link>
+              )}
+              {index === 3 && (
+                <Link
+                  to={createPageUrl("Contact")}
+                  className="mt-7 inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] text-[#b89968]"
+                >
+                  Contact Us <ArrowRight className="h-4 w-4" />
+                </Link>
+              )}
+            </div>
+            <img
+              src={section.image}
+              alt={section.title}
+              className="aspect-[1.25] w-full rounded-sm object-cover"
+            />
+          </section>
+        ))}
+      </div>
+    </main>
+  );
 }
