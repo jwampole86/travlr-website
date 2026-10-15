@@ -3,20 +3,27 @@ import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, ArrowRight, CalendarDays, ChevronDown, Facebook, Globe2, Heart, Home as HomeIcon, Instagram, Linkedin, MapPin, Phone, Smile, Star } from "lucide-react";
 import { createPageUrl } from "@/utils";
 import MobileNav from "@/components/MobileNav";
-import { isPropertyPublic } from "@/lib/propertyVisibility";
+import { publicProperties } from "@/lib/propertyVisibility";
 import { getPropertyImages } from "@/lib/propertyImages";
+import referenceProperties from "@/data/referenceProperties";
 
 const logo = "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68f9945aff077ee02e61835e/98433c0c0_35C7376B-41E8-4994-AE14-22D49B92A14A-1-384x384-0.png";
 const video = "https://www.staytravlr.com/wp-content/uploads/2024/01/travelr-vacation-homes-perch.mp4";
 const fallback = getPropertyImages({ name: "Perch" })[0];
-const homes = [
-  ["Big Sky Luxe Mountain Retreat", "Big Sky, Montana", "6 Bed", "7 Bath", "$5,070.00", "6aa0f8640be251ea460dcf80", "https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=1600&q=80"],
-  ["Tangerine Sky", "Scottsdale, Arizona", "6 Bed", "3 Bath", "$1,122.00", "6aa0f8640be251ea460dcf81", "https://images.casago.com/unit-images/pal/1041831/173615436.jpeg?w=1600&fit=max&q=80&auto=format,compress"],
-  ["The Mountain Watch", "Fountain Hills, Arizona", "4 Bed", "3.5 Bath", "$489.00", "6aa0f8640be251ea460dcf82", "https://images.casago.com/unit-images/pal/1049280/174276929.jpeg?w=1600&fit=max&q=80&auto=format,compress"],
-  ["The Watch Tower", "Fountain Hills, Arizona", "3 Bed", "2.5 Bath", "$391.00", "6aa0f8640be251ea460dcf83", "https://images.casago.com/unit-images/pal/1049279/174276673.jpeg?w=1600&fit=max&q=80&auto=format,compress"],
-  ["Whidbey Island Modern Farmhouse", "Greenbank, Washington", "7 Bed", "4.5 Bath", "$2,056.00", "6aa0f5609820705fd6a78a41", "https://images.casago.com/unit-images/pal/1047508/6a7328c2b4e0640013acf7de.jpg?w=1600&fit=max&q=80&auto=format,compress"],
-  ["Skiers Palace", "Breckenridge, Colorado", "6 Bed", "8.5 Bath", "$4,647.00", "6aa0f39ab06a286a7b378553", "https://cf.bstatic.com/xdata/images/hotel/max1024x768/760682194.jpg?k=18673e58c407344a237ca1827f603b3b2035bb34855399d34414a8d5e1f9d026&o="],
-].filter((home) => isPropertyPublic({ id: home[5] }));
+const homes = publicProperties(referenceProperties).map((property) => [
+  property.name,
+  property.location,
+  `${property.bedrooms} Bed`,
+  `${property.bathrooms} Bath`,
+  property.price_per_night.toLocaleString("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }),
+  property.id,
+  getPropertyImages(property)[0],
+]);
 const areas = [
   ["Palm Desert", "751514953_generated_image.png"], ["La Quinta", "4c80f753e_generated_image.png"], ["Palm Springs", "02f5f1c05_generated_image.png"], ["Indio", "81133c48d_generated_image.png"], ["Coachella", "ccd6f5f1b_generated_image.png"], ["Bermuda Dunes", "d12f1a3dc_generated_image.png"], ["Aspen", "f77e9a8c5_generated_image.png"], ["Breckenridge", "faea4bc3c_generated_image.png"], ["Vail", "623eec1df_generated_image.png"], ["Las Vegas", "33878d44c_generated_image.png"], ["Seattle", "60cdf66c1_generated_image.png"], ["Bellevue", "7fab5aedb_generated_image.png"], ["Miami", "719060a68_generated_image.png"], ["Boston", "c0f5f4c71_generated_image.png"], ["Dallas", "1809200b8_generated_image.png"], ["Salt Lake City", "e8e57b76b_generated_image.png"],
 ].map(([name, file]) => [name, `https://media.base44.com/images/public/68f9945aff077ee02e61835e/${file}`]);

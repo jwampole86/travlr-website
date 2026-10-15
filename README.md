@@ -70,6 +70,8 @@ its own listing, never from a shared Streamline folder: different homes can
 share a folder. Missing or failed photos show an explicit unavailable state
 instead of a stock house photo. `src/lib/propertyVisibility.js` excludes retired
 listings from public collections and direct detail pages.
+The homepage Vacation Homes section displays the full public reference catalog,
+using these same property photo galleries rather than a separate short list.
 
 GitHub integration: [https://docs.base44.com/developers/app-code/local-development/github](https://docs.base44.com/developers/app-code/local-development/github)
 
