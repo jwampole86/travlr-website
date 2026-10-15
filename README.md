@@ -67,6 +67,9 @@ matching public `https://www.staytravlr.com/vacation-rental/<slug>/` gallery.
 The Mountain Watch and The Watch Tower use their own ordered Casago listing
 galleries: `https://casago.com/rentals/1049280/` (60 photos) and
 `https://casago.com/rentals/1049279/` (48 photos), respectively.
+Whidbey Island Modern Farmhouse uses its 38-photo gallery from
+`https://casago.com/rentals/1047508/`. Skiers Palace uses its 49-photo gallery
+from `https://www.vacasa.com/unit/57757`.
 `getPropertyImages` matches exact slugs (or normalized property names), keeping
 the card, property detail, and area gallery consistent. Refresh each entry from
 its own listing, never from a shared Streamline folder: different homes can
@@ -87,6 +90,22 @@ Airbnb listing 17210104 belongs to Lawrence Estate and must not be used for
 Base Camp reviews or booking. Homes without a verified external listing omit
 that link. `ReviewSection` displays only reviews for the selected property and
 reports loading failures explicitly; it does not substitute generic host reviews.
+With the owner's permission, `src/data/propertyReviews.json` contains 2,090
+published reviews from 24 exact official TRAVLR property pages. Each listing
+retains its property ID, source URL, import date, original guest name, publication
+date, rating (or null when unrated), title, and text. Reviews are loaded only on
+property pages, merged with approved website reviews, deduplicated, and shown
+six at a time with source links. Publication dates are not labeled as stay dates;
+unrated reviews are excluded from the displayed average.
+
+Refresh the authorized snapshot using Python 3 and curl:
+`python3 scripts/import-property-reviews.py`. The importer validates listing
+identity and review metadata, excludes duplicate records, and fails without
+replacing the snapshot if a source cannot be verified. It does not write to
+production entities or import reviews from third-party booking platforms.
+Run the focused regression checks with
+`node --test scripts/propertyReviews.test.mjs` and
+`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s scripts -p 'test_*.py'`.
 
 GitHub integration: [https://docs.base44.com/developers/app-code/local-development/github](https://docs.base44.com/developers/app-code/local-development/github)
 

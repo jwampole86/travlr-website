@@ -5,13 +5,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Star, User } from "lucide-react";
-import { format } from "date-fns";
+import { ExternalLink, Star, User } from "lucide-react";
+import { format, parseISO } from "date-fns";
+import { loadPropertyReviews, mergePropertyReviews } from "@/lib/propertyReviews";
 
 export default function ReviewSection({ propertyId }) {
   const queryClient = useQueryClient();
   const [showForm, setShowForm] = useState(false);
   const [submittedForApproval, setSubmittedForApproval] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(6);
   const [formData, setFormData] = useState({
     guest_name: "",
     guest_email: "",
@@ -21,7 +23,7 @@ export default function ReviewSection({ propertyId }) {
     stay_date: ""
   });
 
-  const { data: reviews = [], isLoading, isError } = useQuery({
+  const { data: websiteReviews = [], isLoading, isError } = useQuery({
     queryKey: ["reviews", propertyId],
     queryFn: async () => {
       const allReviews = await base44.entities.Review.filter({ property_id: propertyId });
@@ -34,6 +36,20 @@ export default function ReviewSection({ propertyId }) {
         .sort((a, b) => new Date(b.created_date) - new Date(a.created_date));
     }
   });
+
+  const {
+    data: importedListing,
+    isLoading: isImportLoading,
+    isError: isImportError,
+  } = useQuery({
+    queryKey: ["imported-property-reviews", propertyId],
+    queryFn: () => loadPropertyReviews(propertyId),
+    staleTime: Infinity,
+  });
+  const reviews = mergePropertyReviews(propertyId, websiteReviews, importedListing);
+  const ratedReviews = reviews.filter((review) =>
+    typeof review.rating === "number" && review.rating >= 1 && review.rating <= 5
+  );
 
   const reviewMutation = useMutation({
     mutationFn: async (reviewData) => {
@@ -76,8 +92,8 @@ export default function ReviewSection({ propertyId }) {
     });
   };
 
-  const averageRating = reviews.length > 0
-    ? (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1)
+  const averageRating = ratedReviews.length > 0
+    ? (ratedReviews.reduce((sum, r) => sum + r.rating, 0) / ratedReviews.length).toFixed(1)
     : 0;
 
   const StarRating = ({ rating, interactive = false, onChange }) => {
@@ -106,11 +122,11 @@ export default function ReviewSection({ propertyId }) {
           <h2 className="text-2xl font-light tracking-wider text-gray-800 mb-2">
             Guest Reviews
           </h2>
-          {reviews.length > 0 && (
+          {ratedReviews.length > 0 && (
             <div className="flex items-center gap-3">
               <StarRating rating={Math.round(averageRating)} />
               <span className="text-lg font-medium text-gray-800">{averageRating}</span>
-              <span className="text-gray-500">({reviews.length} {reviews.length === 1 ? "review" : "reviews"})</span>
+              <span className="text-gray-500">({ratedReviews.length} {ratedReviews.length === 1 ? "rating" : "ratings"})</span>
             </div>
           )}
         </div>
@@ -221,18 +237,35 @@ export default function ReviewSection({ propertyId }) {
         </Card>
       )}
 
-      {/* Reviews List */}
-      {isLoading ? (
-        <div className="text-center py-8 text-gray-500">Loading reviews...</div>
-      ) : isError ? (
-        <p role="alert" className="py-8 text-gray-600">
-          We couldn&apos;t load this home&apos;s guest reviews. Please try again later.
+      {importedListing && (
+        <a
+          href={importedListing.source_url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 text-sm text-[#b89968] underline hover:text-[#a68858]"
+        >
+          Read all {importedListing.reviews.length} published reviews on TRAVLR
+          <ExternalLink className="h-4 w-4" />
+        </a>
+      )}
+      {(isError || isImportError) && (
+        <p role="alert" className="text-sm text-gray-600">
+          {reviews.length > 0
+            ? "Some reviews could not be loaded. Available published reviews are shown below."
+            : "We couldn't load this home's guest reviews. Please try again later."}
         </p>
+      )}
+
+      {/* Reviews List */}
+      {(isLoading || isImportLoading) && reviews.length === 0 ? (
+        <div className="text-center py-8 text-gray-500">Loading reviews...</div>
+      ) : (isError || isImportError) && reviews.length === 0 ? (
+        null
       ) : reviews.length === 0 ? (
         <p className="py-8 text-gray-500">No guest reviews have been published for this home yet.</p>
       ) : (
         <div className="space-y-4">
-          {reviews.map((review) => (
+          {reviews.slice(0, visibleCount).map((review) => (
             <Card key={review.id}>
               <CardContent className="pt-6">
                 <div className="flex items-start gap-4">
@@ -244,20 +277,41 @@ export default function ReviewSection({ propertyId }) {
                       <div>
                         <h4 className="font-medium text-gray-800">{review.guest_name}</h4>
                         <p className="text-sm text-gray-500">
-                          {review.stay_date && `Stayed ${format(new Date(review.stay_date), "MMMM yyyy")}`}
+                          {review.published_date
+                            ? `Reviewed ${format(parseISO(review.published_date), "MMMM d, yyyy")}`
+                            : review.stay_date && `Stayed ${format(parseISO(review.stay_date), "MMMM yyyy")}`}
                         </p>
                       </div>
-                      <StarRating rating={review.rating} />
+                      {review.rating != null && <StarRating rating={review.rating} />}
                     </div>
                     {review.title && (
                       <h5 className="font-medium text-gray-800 mb-2">{review.title}</h5>
                     )}
-                    <p className="text-gray-600 leading-relaxed">&quot;{review.comment}&quot;</p>
+                    <p className="whitespace-pre-line text-gray-600 leading-relaxed">{review.comment}</p>
+                    {review.source_url && (
+                      <a
+                        href={review.source_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-3 inline-flex items-center gap-1 text-xs text-[#b89968] underline hover:text-[#a68858]"
+                      >
+                        View original TRAVLR review <ExternalLink className="h-3 w-3" />
+                      </a>
+                    )}
                   </div>
                 </div>
               </CardContent>
             </Card>
           ))}
+          {visibleCount < reviews.length && (
+            <Button
+              variant="outline"
+              onClick={() => setVisibleCount((count) => count + 6)}
+              className="w-full"
+            >
+              Show more reviews ({reviews.length - visibleCount} remaining)
+            </Button>
+          )}
         </div>
       )}
     </div>

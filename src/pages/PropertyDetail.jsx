@@ -276,7 +276,7 @@ export default function PropertyDetail() {
                 <span className="text-sm text-gray-600">Verified Vrbo rating from {verifiedReviewAggregates[property.name].count} guest reviews</span>
               </div>
             )}
-            <ReviewSection propertyId={propertyId} />
+            <ReviewSection key={propertyId} propertyId={propertyId} />
             {verifiedReviewLinks[property.name] && (
               <a
                 href={verifiedReviewLinks[property.name]}
