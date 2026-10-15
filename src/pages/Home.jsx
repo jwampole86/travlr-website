@@ -21,33 +21,37 @@ import {
   X,
 } from "lucide-react";
 import { createPageUrl } from "@/utils";
+import { getPropertyImages } from "@/lib/propertyImages";
 
 const logoUrl =
   "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68f9945aff077ee02e61835e/98433c0c0_35C7376B-41E8-4994-AE14-22D49B92A14A-1-384x384-0.png";
 
 const homes = [
   {
+    id: "6aa0b39f2218f8fce220bfbf",
     name: "Perch",
     location: "Palm Desert, California",
     details: "5 beds · 5.5 baths · Sleeps 12",
     image:
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=85",
+      getPropertyImages({ name: "Perch" })[0],
     label: "Desert escape",
   },
   {
+    id: "6aa0b39f2218f8fce220bfc1",
     name: "Santal Estate",
     location: "Indio, California",
     details: "7 beds · 6.5 baths · Sleeps 16",
     image:
-      "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=1200&q=85",
+      getPropertyImages({ name: "Santal Estate" })[0],
     label: "Festival season",
   },
   {
+    id: "6aa0b39f2218f8fce220bfb7",
     name: "Villa Lago",
     location: "La Quinta, California",
     details: "5 beds · 5 baths · Sleeps 10",
     image:
-      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=85",
+      "https://gallery.streamlinevrs.com/units-gallery/00/04/B2/image_150403767.jpeg",
     label: "Golf retreat",
   },
 ];
@@ -56,22 +60,22 @@ const destinations = [
   {
     name: "Palm Desert",
     image:
-      "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1000&q=85",
+      "https://media.base44.com/images/public/68f9945aff077ee02e61835e/751514953_generated_image.png",
   },
   {
     name: "La Quinta",
     image:
-      "https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&w=1000&q=85",
+      "https://media.base44.com/images/public/68f9945aff077ee02e61835e/4c80f753e_generated_image.png",
   },
   {
     name: "Palm Springs",
     image:
-      "https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1000&q=85",
+      "https://media.base44.com/images/public/68f9945aff077ee02e61835e/02f5f1c05_generated_image.png",
   },
   {
     name: "Indio",
     image:
-      "https://images.unsplash.com/photo-1473445361085-b9a07f55608b?auto=format&fit=crop&w=1000&q=85",
+      "https://media.base44.com/images/public/68f9945aff077ee02e61835e/81133c48d_generated_image.png",
   },
 ];
 
@@ -335,7 +339,7 @@ export default function Home() {
         <div className="mt-12 grid gap-6 md:grid-cols-3 lg:gap-8">
           {homes.map((home) => (
             <article key={home.name} className="group">
-              <Link to={createPageUrl("SearchResults")} className="block overflow-hidden rounded-[1.4rem] bg-[#e8e4da]">
+              <Link to={`/PropertyDetail?id=${home.id}`} className="block overflow-hidden rounded-[1.4rem] bg-[#e8e4da]">
                 <div className="relative aspect-[4/4.8] overflow-hidden">
                   <img
                     src={home.image}

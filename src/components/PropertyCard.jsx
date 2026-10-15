@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { MapPin, Bed, Bath, Heart } from "lucide-react";
 import { useFavorites } from "@/hooks/useFavorites";
 import { calculateStayPricing } from "@/lib/pricing";
+import PropertyImage from "@/components/PropertyImage";
+import { getPropertyImages } from "@/lib/propertyImages";
 
 const fmt = (n) =>
   n.toLocaleString("en-US", {
@@ -15,6 +17,7 @@ const fmt = (n) =>
 export default function PropertyCard({ property, arrival, departure }) {
   const { isFavorite, toggleFavorite } = useFavorites();
   const saved = isFavorite(property.id);
+  const images = getPropertyImages(property);
   const detailUrl = `/PropertyDetail?id=${property.id}`;
   const hasPrice = property.price_per_night != null;
   const pricing = calculateStayPricing(
@@ -28,8 +31,8 @@ export default function PropertyCard({ property, arrival, departure }) {
   return (
     <Link to={detailUrl} className="group cursor-pointer block">
       <div className="relative overflow-hidden mb-4 aspect-[4/3]">
-        <img
-          src={property.images?.[0] || "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&q=80"}
+        <PropertyImage
+          src={images[0]}
           alt={property.name}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
         />

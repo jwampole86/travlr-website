@@ -17,6 +17,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { format, differenceInCalendarDays, parse } from "date-fns";
 import referenceProperties from "@/data/referenceProperties";
+import { publicProperties } from "@/lib/propertyVisibility";
 
 const toISO = (d) => (d ? format(d, "yyyy-MM-dd") : null);
 const fromISO = (s) => (s ? parse(s, "yyyy-MM-dd", new Date()) : null);
@@ -58,9 +59,13 @@ export default function SearchResults() {
     queryFn: async () => {
       try {
         const properties = await base44.entities.Property.list();
-        return properties.length ? properties : referenceProperties;
-      } catch {
-        return referenceProperties;
+        if (!Array.isArray(properties)) {
+          console.warn("Property API returned an invalid response; using the reference catalog.");
+        }
+        return publicProperties(Array.isArray(properties) && properties.length ? properties : referenceProperties);
+      } catch (error) {
+        console.error("Unable to load properties; using the reference catalog.", error);
+        return publicProperties(referenceProperties);
       }
     },
   });

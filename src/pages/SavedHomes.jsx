@@ -4,9 +4,11 @@ import { Heart, ChevronLeft } from "lucide-react";
 import { useFavorites } from "@/hooks/useFavorites";
 import PropertyCard from "@/components/PropertyCard";
 import { createPageUrl } from "@/utils";
+import { publicProperties } from "@/lib/propertyVisibility";
 
 export default function SavedHomes() {
-  const { favorites, clearFavorites } = useFavorites();
+  const { favorites: savedFavorites, clearFavorites } = useFavorites();
+  const favorites = publicProperties(savedFavorites);
 
   return (
     <div className="min-h-screen bg-white">

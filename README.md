@@ -45,6 +45,11 @@ base44 dev --remote
 
 ## Publish Your Changes
 
+The `jwampole86/travlr-website` repository also has a Vercel deployment for
+`staytrvlr.com`. Push website changes to its production branch and verify the
+Vercel deployment and custom domain; publishing only in Base44 does not update
+that Vercel-hosted frontend.
+
 After pushing your changes to git, open the Base44 dashboard and publish the app:
 
 ```bash
@@ -54,6 +59,17 @@ base44 dashboard open
 This repo syncs to Base44 through git, so publish from the dashboard rather than `base44 deploy` — a CLI deploy ships your local tree directly, bypassing the sync, and the deployed state silently diverges from the repo.
 
 ## Docs & Support
+
+### Property photos
+
+`src/data/propertyPhotoGalleries.json` contains ordered photo URLs from each
+matching public `https://www.staytravlr.com/vacation-rental/<slug>/` gallery.
+`getPropertyImages` matches exact slugs (or normalized property names), keeping
+the card, property detail, and area gallery consistent. Refresh each entry from
+its own listing, never from a shared Streamline folder: different homes can
+share a folder. Missing or failed photos show an explicit unavailable state
+instead of a stock house photo. `src/lib/propertyVisibility.js` excludes retired
+listings from public collections and direct detail pages.
 
 GitHub integration: [https://docs.base44.com/developers/app-code/local-development/github](https://docs.base44.com/developers/app-code/local-development/github)
 

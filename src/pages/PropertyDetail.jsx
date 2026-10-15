@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
@@ -34,6 +34,9 @@ import ReviewSection from "../components/ReviewSection";
 import AIDescriptionGenerator from "../components/AIDescriptionGenerator";
 import { calculateStayPricing } from "@/lib/pricing";
 import referenceProperties from "@/data/referenceProperties";
+import { isPropertyPublic } from "@/lib/propertyVisibility";
+import PropertyImage from "@/components/PropertyImage";
+import { getPropertyImages } from "@/lib/propertyImages";
 
 const amenityIcons = {
   "WiFi": Wifi,
@@ -88,14 +91,24 @@ export default function PropertyDetail() {
   const [message, setMessage] = useState("");
   const [bookingSubmitted, setBookingSubmitted] = useState(false);
 
+  useEffect(() => {
+    setCurrentImageIndex(0);
+  }, [propertyId]);
+
   const { data: property, isLoading } = useQuery({
     queryKey: ["property", propertyId],
     queryFn: async () => {
+      if (!isPropertyPublic({ id: propertyId })) return null;
       try {
         const properties = await base44.entities.Property.filter({ id: propertyId });
-        return properties[0] || referenceProperties.find((property) => property.id === propertyId);
-      } catch {
-        return referenceProperties.find((property) => property.id === propertyId);
+        if (!Array.isArray(properties)) {
+          console.warn("Property API returned an invalid response; using the reference catalog.");
+        }
+        return (Array.isArray(properties) ? properties.find((property) => property.id === propertyId) : null)
+          || referenceProperties.find((property) => property.id === propertyId) || null;
+      } catch (error) {
+        console.error("Unable to load property; using the reference catalog.", error);
+        return referenceProperties.find((property) => property.id === propertyId) || null;
       }
     },
     enabled: !!propertyId,
@@ -152,12 +165,13 @@ export default function PropertyDetail() {
     );
   }
 
+  const propertyImages = getPropertyImages(property);
   const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % property.images.length);
+    setCurrentImageIndex((prev) => (prev + 1) % propertyImages.length);
   };
 
   const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + property.images.length) % property.images.length);
+    setCurrentImageIndex((prev) => (prev - 1 + propertyImages.length) % propertyImages.length);
   };
 
   const fmt = (n) =>
@@ -231,13 +245,13 @@ export default function PropertyDetail() {
             {/* Image Gallery */}
             <div className="relative">
               <div className="aspect-[16/10] overflow-hidden rounded-sm">
-                <img
-                  src={property.images?.[currentImageIndex] || "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&q=80"}
+                <PropertyImage
+                  src={propertyImages[currentImageIndex]}
                   alt={property.name}
                   className="w-full h-full object-cover"
                 />
               </div>
-              {property.images?.length > 1 && (
+              {propertyImages.length > 1 && (
                 <>
                   <button
                     onClick={prevImage}
@@ -252,16 +266,16 @@ export default function PropertyDetail() {
                     <ChevronRight className="w-6 h-6 text-gray-800" />
                   </button>
                   <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/50 px-3 py-1 rounded-full text-white text-sm">
-                    {currentImageIndex + 1} / {property.images.length}
+                    {currentImageIndex + 1} / {propertyImages.length}
                   </div>
                 </>
               )}
             </div>
 
             {/* Thumbnail Gallery - scrollable strip of all photos */}
-            {property.images?.length > 1 && (
+            {propertyImages.length > 1 && (
               <div className="flex gap-3 overflow-x-auto pb-2 -mx-1 px-1">
-                {property.images.map((img, idx) => (
+                {propertyImages.map((img, idx) => (
                   <button
                     key={idx}
                     onClick={() => setCurrentImageIndex(idx)}
@@ -270,7 +284,7 @@ export default function PropertyDetail() {
                       idx === currentImageIndex ? "border-[#b89968] opacity-100" : "border-transparent opacity-60 hover:opacity-100"
                     }`}
                   >
-                    <img src={img} alt="" className="w-full h-full object-cover" />
+                    <PropertyImage src={img} alt={`${property.name} photo ${idx + 1}`} className="w-full h-full object-cover" />
                   </button>
                 ))}
               </div>

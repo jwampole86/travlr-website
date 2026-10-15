@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ChevronLeft, ChevronRight, Expand } from "lucide-react";
+import PropertyImage from "@/components/PropertyImage";
 
 export default function AreaGallery({ images, title }) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -21,12 +22,11 @@ export default function AreaGallery({ images, title }) {
 
       {/* Main gallery image */}
       <div className="relative aspect-[16/9] overflow-hidden rounded-sm group">
-        <img
+        <PropertyImage
           src={images[activeIndex]}
           alt={`${title} ${activeIndex + 1}`}
-          className="w-full h-full object-cover cursor-pointer transition-transform duration-500"
+          className="w-full h-full object-cover transition-transform duration-500"
           onClick={() => setLightbox(true)}
-          loading="lazy"
         />
         {images.length > 1 && (
           <>
@@ -70,7 +70,7 @@ export default function AreaGallery({ images, title }) {
                 idx === activeIndex ? "border-[#b89968] opacity-100" : "border-transparent opacity-60 hover:opacity-100"
               }`}
             >
-              <img src={img} alt="" className="w-full h-full object-cover" loading="lazy" />
+              <PropertyImage src={img} alt={`${title} photo ${idx + 1}`} className="w-full h-full object-cover" />
             </button>
           ))}
         </div>
@@ -107,7 +107,7 @@ export default function AreaGallery({ images, title }) {
               </button>
             </>
           )}
-          <img
+          <PropertyImage
             src={images[activeIndex]}
             alt={`${title} ${activeIndex + 1}`}
             className="max-w-full max-h-[85vh] object-contain"

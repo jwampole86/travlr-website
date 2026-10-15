@@ -5,79 +5,40 @@ import { base44 } from "@/api/base44Client";
 import { ChevronLeft } from "lucide-react";
 import PropertyCard from "@/components/PropertyCard";
 import AreaGallery from "@/components/AreaGallery";
+import { publicProperties } from "@/lib/propertyVisibility";
+import { getPropertyImages } from "@/lib/propertyImages";
+import referenceProperties from "@/data/referenceProperties";
 
 const AREA_DATA = {
   "Palm Desert": {
-    img: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68f9945aff077ee02e61835e/f3fbc7a9e_Screenshot2026-02-24at112242PM.png",
+    img: "https://media.base44.com/images/public/68f9945aff077ee02e61835e/751514953_generated_image.png",
     description:
       "Palm Desert is the beating heart of the Coachella Valley — home to the upscale El Paseo shopping district, world-class golf, The Living Desert zoo, and a year-round calendar of arts and dining. Our Palm Desert homes range from modern architectural masterpieces perched in the Cahuilla Hills to sprawling resort-style estates with two pools, lazy rivers, and private pickleball courts.",
-    gallery: [
-      "https://media.base44.com/images/public/68f9945aff077ee02e61835e/751514953_generated_image.png",
-      "https://media.base44.com/images/public/68f9945aff077ee02e61835e/f3fbc7a9e_Screenshot2026-02-24at112242PM.png",
-      "https://media.base44.com/images/public/68f9945aff077ee02e61835e/4c80f753e_generated_image.png",
-      "https://media.base44.com/images/public/68f9945aff077ee02e61835e/02f5f1c05_generated_image.png",
-      "https://media.base44.com/images/public/68f9945aff077ee02e61835e/81133c48d_generated_image.png",
-    ]
   },
   "La Quinta": {
-    img: "https://media.base44.com/images/public/68f9945aff077ee02e61835e/623268b90_generated_image.png",
+    img: "https://media.base44.com/images/public/68f9945aff077ee02e61835e/4c80f753e_generated_image.png",
     description:
       "La Quinta is the desert's golf capital, anchored by the legendary PGA West community with its TPC Stadium, Greg Norman, and Jack Nicklaus Tournament courses. Old Town La Quinta offers charming dining and boutiques, while the surrounding mountains frame luxury villas with golf course and mountain views just minutes from the Empire Polo Fields.",
-    gallery: [
-      "https://images.unsplash.com/photo-1535131749006-b7f58395099b?w=1200&q=80",
-      "https://images.unsplash.com/photo-1582719478250-c891e2b5f98b?w=1200&q=80",
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80",
-      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1200&q=80",
-      "https://images.unsplash.com/photo-1610530460358-fs63323b0890?w=1200&q=80",
-    ]
   },
   "Palm Springs": {
-    img: "https://images.unsplash.com/photo-1542223616-9de9adb5e3e8?w=1200&q=80",
+    img: "https://media.base44.com/images/public/68f9945aff077ee02e61835e/02f5f1c05_generated_image.png",
     description:
       "Palm Springs is an iconic desert resort town famous for its mid-century modern architecture, Rat Pack Hollywood history, and the Palm Springs Aerial Tramway. The Racquet Club West neighborhood blends estate-sized properties with walkable access to downtown's hotels, restaurants, and design shops — all set against striking mountain backdrops.",
-    gallery: [
-      "https://images.unsplash.com/photo-1542223616-9de9adb5e3e8?w=1200&q=80",
-      "https://images.unsplash.com/photo-1485827404703-89b55fcc5950?w=1200&q=80",
-      "https://images.unsplash.com/photo-1582719478250-c891e2b5f98b?w=1200&q=80",
-      "https://images.unsplash.com/photo-1535131749006-b7f58395099b?w=1200&q=80",
-      "https://images.unsplash.com/photo-1596178065887-1198b6148b2b?w=1200&q=80",
-    ]
   },
   Indio: {
-    img: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68f9945aff077ee02e61835e/f29348609_Screenshot2026-02-24at101804PM.png",
+    img: "https://media.base44.com/images/public/68f9945aff077ee02e61835e/81133c48d_generated_image.png",
     description:
       "Indio is the 'City of Festivals,' home to the Empire Polo Club where Coachella and Stagecoach take over the desert each spring. Beyond the festivals, Indio offers date groves, the Riverside County Fair, and easy access to golf, casinos, and a growing collection of luxury vacation homes minutes from the polo grounds.",
-    gallery: [
-      "https://images.unsplash.com/photo-1506966953602-c20cc11f75e3?w=1200&q=80",
-      "https://images.unsplash.com/photo-1596178065887-1198b6148b2b?w=1200&q=80",
-      "https://images.unsplash.com/photo-1582719478250-c891e2b5f98b?w=1200&q=80",
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80",
-      "https://images.unsplash.com/photo-1535131749006-b7f58395099b?w=1200&q=80",
-    ]
   },
   Coachella: {
-    img: "https://images.unsplash.com/photo-1506966953602-c20cc11f75e3?w=1200&q=80",
+    img: "https://media.base44.com/images/public/68f9945aff077ee02e61835e/ccd6f5f1b_generated_image.png",
     description:
       "Coachella is a fast-growing desert city minutes from the Empire Polo Fields and the festival action. Our Coachella homes offer a serene, design-forward escape — Bali- and Tulum-inspired retreats with saltwater pools, fire pits, and putting greens, perfectly positioned for festival-goers and sun-seekers alike.",
-    gallery: [
-      "https://images.unsplash.com/photo-1506966953602-c20cc11f75e3?w=1200&q=80",
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80",
-      "https://images.unsplash.com/photo-1582719478250-c891e2b5f98b?w=1200&q=80",
-      "https://images.unsplash.com/photo-1596178065887-1198b6148b2b?w=1200&q=80",
-      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1200&q=80",
-    ]
   },
   "Bermuda Dunes": {
-    img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80",
+    img: "https://media.base44.com/images/public/68f9945aff077ee02e61835e/d12f1a3dc_generated_image.png",
     description:
       "Bermuda Dunes is an exclusive gated golf community just minutes from Palm Desert and La Quinta. Known for the Bermuda Dunes Country Club and its tranquil, private setting, it's home to some of the desert's most spectacular resort-style estates — including properties with lazy rivers, pickleball courts, and panoramic mountain views.",
-    gallery: [
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80",
-      "https://images.unsplash.com/photo-1535131749006-b7f58395099b?w=1200&q=80",
-      "https://images.unsplash.com/photo-1582719478250-c891e2b5f98b?w=1200&q=80",
-      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1200&q=80",
-      "https://images.unsplash.com/photo-1610530460358-fs63323b0890?w=1200&q=80",
-    ]
   }
 };
 
@@ -90,9 +51,20 @@ export default function AreaPage() {
     queryKey: ["properties", "area", decodedName],
     queryFn: async () => {
       const all = await base44.entities.Property.list();
-      return all.filter((p) => p.location === decodedName);
+      if (!Array.isArray(all)) {
+        console.warn("Property API returned an invalid response; using the reference catalog.");
+      }
+      const catalog = Array.isArray(all) && all.length ? all : referenceProperties;
+      return publicProperties(catalog).filter((p) => p.location === decodedName);
     }
   });
+  const galleryImages = Array.from(
+    new Set(
+      properties
+        .flatMap(getPropertyImages)
+        .filter((image) => typeof image === "string" && image.trim() && image !== area?.img)
+    )
+  );
 
   return (
     <div className="min-h-screen bg-white">
@@ -139,8 +111,8 @@ export default function AreaPage() {
         )}
 
         {/* Destination Photo Gallery */}
-        {area?.gallery && (
-          <AreaGallery images={area.gallery} title={decodedName} />
+        {galleryImages.length > 0 && (
+          <AreaGallery key={decodedName} images={galleryImages} title={decodedName} />
         )}
 
         <div className="text-center mb-10">
