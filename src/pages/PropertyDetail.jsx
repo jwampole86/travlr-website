@@ -59,19 +59,17 @@ const verifiedReviewAggregates = {
   "Casa Mara": { rating: "10.0", count: 92 },
   "Villa Bella": { rating: "10.0", count: 77 },
 };
-const airbnbHostReviewsUrl = "https://www.airbnb.com/users/profile/1462768828819189174?previous_page_name=PdpHomeMarketplace";
 const airbnbListingReviews = {
-  "Base Camp": { url: "https://www.airbnb.com/rooms/17210104?source_impression_id=p3_1788967214_P3ffMup3OeZ_j9O5", rating: "4.96", count: 69 },
-  "Santal Estate": { url: "https://www.airbnb.com/rooms/17923295?source_impression_id=p3_1788967214_P3jK9h7e0emnaPhJ", rating: "4.99", count: 94 },
-  Cappella: { url: "https://www.airbnb.com/rooms/20829909", rating: "4.82", count: 97 },
+  "Santal Estate": { url: "https://www.airbnb.com/rooms/17923295" },
+  Cappella: { url: "https://www.airbnb.com/rooms/20829909" },
 };
 const directBookingLinks = {
   "Casa Roca": { url: "https://www.vrbo.com/2756367", platform: "Vrbo" },
-  "Base Camp": { url: "https://www.airbnb.com/rooms/17210104?source_impression_id=p3_1788967214_P3ffMup3OeZ_j9O5", platform: "Airbnb" },
+  "Base Camp": { url: verifiedReviewLinks["Base Camp"], platform: "Vrbo" },
   Perch: { url: "https://www.vrbo.com/3794371", platform: "Vrbo" },
   "Casa Mara": { url: "https://www.vrbo.com/2301357", platform: "Vrbo" },
   "Villa Bella": { url: "https://www.vrbo.com/2744508", platform: "Vrbo" },
-  "Santal Estate": { url: "https://www.airbnb.com/rooms/17923295?source_impression_id=p3_1788967214_P3jK9h7e0emnaPhJ", platform: "Airbnb" },
+  "Santal Estate": { url: airbnbListingReviews["Santal Estate"].url, platform: "Airbnb" },
   Cappella: { url: "https://www.airbnb.com/rooms/20829909", platform: "Airbnb" },
 };
 
@@ -290,17 +288,17 @@ export default function PropertyDetail() {
                 <ExternalLink className="h-4 w-4" />
               </a>
             )}
-            <a
-              href={airbnbListingReviews[property.name]?.url || airbnbHostReviewsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-3 inline-flex items-center gap-2 text-sm tracking-wide text-[#b89968] underline transition-colors hover:text-[#a68858]"
-            >
-              {airbnbListingReviews[property.name]
-                ? `Read ${property.name} reviews on Airbnb (${airbnbListingReviews[property.name].rating}/5, ${airbnbListingReviews[property.name].count} reviews)`
-                : "Read host reviews on Airbnb"}
-              <ExternalLink className="h-4 w-4" />
-            </a>
+            {airbnbListingReviews[property.name] && (
+              <a
+                href={airbnbListingReviews[property.name].url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-3 inline-flex items-center gap-2 text-sm tracking-wide text-[#b89968] underline transition-colors hover:text-[#a68858]"
+              >
+                Read {property.name} reviews on Airbnb
+                <ExternalLink className="h-4 w-4" />
+              </a>
+            )}
           </div>
 
           {/* Right Column - Booking Form */}

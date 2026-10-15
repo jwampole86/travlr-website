@@ -5,26 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ExternalLink, Star, User } from "lucide-react";
+import { Star, User } from "lucide-react";
 import { format } from "date-fns";
-
-const AIRBNB_HOST_REVIEWS_URL = "https://www.airbnb.com/users/profile/1462768828819189174?previous_page_name=PdpHomeMarketplace";
-const sourcedHostReviews = [
-  {
-    id: "airbnb-host-steve",
-    guest_name: "Steve",
-    rating: 5,
-    title: "Guest Review",
-    comment: "We had a great stay and really enjoyed the property. The views are absolutely amazing, and the infinity pool was definitely one of the highlights.",
-  },
-  {
-    id: "airbnb-host-francine",
-    guest_name: "Francine",
-    rating: 5,
-    title: "Guest Review",
-    comment: "Everything was great. Had a great stay with family! Thank you!",
-  },
-];
 
 export default function ReviewSection({ propertyId }) {
   const queryClient = useQueryClient();
@@ -39,11 +21,15 @@ export default function ReviewSection({ propertyId }) {
     stay_date: ""
   });
 
-  const { data: reviews = [], isLoading } = useQuery({
+  const { data: reviews = [], isLoading, isError } = useQuery({
     queryKey: ["reviews", propertyId],
     queryFn: async () => {
       const allReviews = await base44.entities.Review.filter({ property_id: propertyId });
+      if (!Array.isArray(allReviews)) {
+        throw new Error("The property review service returned an invalid response.");
+      }
       return allReviews
+        .filter((review) => review.property_id === propertyId)
         .filter((review) => !review.approval_status || review.approval_status === "approved")
         .sort((a, b) => new Date(b.created_date) - new Date(a.created_date));
     }
@@ -93,7 +79,6 @@ export default function ReviewSection({ propertyId }) {
   const averageRating = reviews.length > 0
     ? (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1)
     : 0;
-  const displayedReviews = reviews.length > 0 ? reviews : sourcedHostReviews;
 
   const StarRating = ({ rating, interactive = false, onChange }) => {
     return (
@@ -119,16 +104,13 @@ export default function ReviewSection({ propertyId }) {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-light tracking-wider text-gray-800 mb-2">
-            {reviews.length > 0 ? "Guest Reviews" : "Reviews from Airbnb"}
+            Guest Reviews
           </h2>
-          {displayedReviews.length > 0 && (
+          {reviews.length > 0 && (
             <div className="flex items-center gap-3">
-              <StarRating rating={reviews.length > 0 ? Math.round(averageRating) : 5} />
-              {reviews.length > 0 ? (
-                <><span className="text-lg font-medium text-gray-800">{averageRating}</span><span className="text-gray-500">({reviews.length} {reviews.length === 1 ? "review" : "reviews"})</span></>
-              ) : (
-                <span className="text-sm text-gray-500">Public excerpts from Jen&apos;s Airbnb host profile</span>
-              )}
+              <StarRating rating={Math.round(averageRating)} />
+              <span className="text-lg font-medium text-gray-800">{averageRating}</span>
+              <span className="text-gray-500">({reviews.length} {reviews.length === 1 ? "review" : "reviews"})</span>
             </div>
           )}
         </div>
@@ -242,9 +224,15 @@ export default function ReviewSection({ propertyId }) {
       {/* Reviews List */}
       {isLoading ? (
         <div className="text-center py-8 text-gray-500">Loading reviews...</div>
+      ) : isError ? (
+        <p role="alert" className="py-8 text-gray-600">
+          We couldn&apos;t load this home&apos;s guest reviews. Please try again later.
+        </p>
+      ) : reviews.length === 0 ? (
+        <p className="py-8 text-gray-500">No guest reviews have been published for this home yet.</p>
       ) : (
         <div className="space-y-4">
-          {displayedReviews.map((review) => (
+          {reviews.map((review) => (
             <Card key={review.id}>
               <CardContent className="pt-6">
                 <div className="flex items-start gap-4">
@@ -265,11 +253,6 @@ export default function ReviewSection({ propertyId }) {
                       <h5 className="font-medium text-gray-800 mb-2">{review.title}</h5>
                     )}
                     <p className="text-gray-600 leading-relaxed">&quot;{review.comment}&quot;</p>
-                    {review.id.startsWith("airbnb-") && (
-                      <a href={AIRBNB_HOST_REVIEWS_URL} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-1 text-xs text-[#b89968] underline hover:text-[#a68858]">
-                        View source on Airbnb <ExternalLink className="h-3 w-3" />
-                      </a>
-                    )}
                   </div>
                 </div>
               </CardContent>

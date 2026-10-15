@@ -79,6 +79,15 @@ Property cards support previous/next photo navigation without leaving the page.
 Property detail galleries include thumbnails, an all-photo grid, and a
 full-screen viewer with arrow-key navigation and Escape to close.
 
+### Property reviews
+
+External review links in `src/pages/PropertyDetail.jsx` must point to the exact
+named listing, not a shared host profile. Base Camp uses Vrbo listing 1978340;
+Airbnb listing 17210104 belongs to Lawrence Estate and must not be used for
+Base Camp reviews or booking. Homes without a verified external listing omit
+that link. `ReviewSection` displays only reviews for the selected property and
+reports loading failures explicitly; it does not substitute generic host reviews.
+
 GitHub integration: [https://docs.base44.com/developers/app-code/local-development/github](https://docs.base44.com/developers/app-code/local-development/github)
 
 Local development: [https://docs.base44.com/developers/backend/overview/local-dev/local-development-overview](https://docs.base44.com/developers/backend/overview/local-dev/local-development-overview)
