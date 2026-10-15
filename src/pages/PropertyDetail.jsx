@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
@@ -11,7 +11,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
   ChevronLeft,
-  ChevronRight,
   Wifi,
   Car,
   UtensilsCrossed,
@@ -35,8 +34,7 @@ import AIDescriptionGenerator from "../components/AIDescriptionGenerator";
 import { calculateStayPricing } from "@/lib/pricing";
 import referenceProperties from "@/data/referenceProperties";
 import { isPropertyPublic } from "@/lib/propertyVisibility";
-import PropertyImage from "@/components/PropertyImage";
-import { getPropertyImages } from "@/lib/propertyImages";
+import PropertyGallery from "@/components/PropertyGallery";
 
 const amenityIcons = {
   "WiFi": Wifi,
@@ -82,7 +80,6 @@ export default function PropertyDetail() {
   const propertyId = searchParams.get("id");
   const { user } = useAuth();
 
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [checkIn, setCheckIn] = useState(null);
   const [checkOut, setCheckOut] = useState(null);
   const [guestName, setGuestName] = useState("");
@@ -90,10 +87,6 @@ export default function PropertyDetail() {
   const [guestPhone, setGuestPhone] = useState("");
   const [message, setMessage] = useState("");
   const [bookingSubmitted, setBookingSubmitted] = useState(false);
-
-  useEffect(() => {
-    setCurrentImageIndex(0);
-  }, [propertyId]);
 
   const { data: property, isLoading } = useQuery({
     queryKey: ["property", propertyId],
@@ -165,15 +158,6 @@ export default function PropertyDetail() {
     );
   }
 
-  const propertyImages = getPropertyImages(property);
-  const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % propertyImages.length);
-  };
-
-  const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + propertyImages.length) % propertyImages.length);
-  };
-
   const fmt = (n) =>
     n.toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
 
@@ -242,54 +226,7 @@ export default function PropertyDetail() {
         <div className="grid lg:grid-cols-3 gap-12">
           {/* Left Column - Gallery & Details */}
           <div className="lg:col-span-2 min-w-0 space-y-8">
-            {/* Image Gallery */}
-            <div className="relative">
-              <div className="aspect-[16/10] overflow-hidden rounded-sm">
-                <PropertyImage
-                  src={propertyImages[currentImageIndex]}
-                  alt={property.name}
-                  className="w-full h-full object-cover"
-                  loading="eager"
-                />
-              </div>
-              {propertyImages.length > 1 && (
-                <>
-                  <button
-                    onClick={prevImage}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full shadow-lg transition-all"
-                  >
-                    <ChevronLeft className="w-6 h-6 text-gray-800" />
-                  </button>
-                  <button
-                    onClick={nextImage}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full shadow-lg transition-all"
-                  >
-                    <ChevronRight className="w-6 h-6 text-gray-800" />
-                  </button>
-                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/50 px-3 py-1 rounded-full text-white text-sm">
-                    {currentImageIndex + 1} / {propertyImages.length}
-                  </div>
-                </>
-              )}
-            </div>
-
-            {/* Thumbnail Gallery - scrollable strip of all photos */}
-            {propertyImages.length > 1 && (
-              <div className="flex gap-3 overflow-x-auto pb-2 -mx-1 px-1">
-                {propertyImages.map((img, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setCurrentImageIndex(idx)}
-                    aria-label={`View photo ${idx + 1}`}
-                    className={`flex-shrink-0 w-20 h-20 sm:w-24 sm:h-24 overflow-hidden rounded-sm border-2 transition-all ${
-                      idx === currentImageIndex ? "border-[#b89968] opacity-100" : "border-transparent opacity-60 hover:opacity-100"
-                    }`}
-                  >
-                    <PropertyImage src={img} alt={`${property.name} photo ${idx + 1}`} className="w-full h-full object-cover" />
-                  </button>
-                ))}
-              </div>
-            )}
+            <PropertyGallery key={property.id} property={property} />
 
             {/* AI Description Generator - admin only */}
             {user?.role === "admin" && (

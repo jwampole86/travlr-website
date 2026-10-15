@@ -72,6 +72,9 @@ instead of a stock house photo. `src/lib/propertyVisibility.js` excludes retired
 listings from public collections and direct detail pages.
 The homepage Vacation Homes section displays the full public reference catalog,
 using these same property photo galleries rather than a separate short list.
+Property cards support previous/next photo navigation without leaving the page.
+Property detail galleries include thumbnails, an all-photo grid, and a
+full-screen viewer with arrow-key navigation and Escape to close.
 
 GitHub integration: [https://docs.base44.com/developers/app-code/local-development/github](https://docs.base44.com/developers/app-code/local-development/github)
 
