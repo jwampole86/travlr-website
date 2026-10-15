@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 import { mergePropertyReviews } from "../src/lib/propertyReviews.js";
-import { getMostReviewedProperties } from "../src/lib/featuredProperties.js";
+import { getMostReviewedProperties, sortProperties } from "../src/lib/featuredProperties.js";
 
 const review = {
   id: "published",
@@ -95,4 +95,22 @@ test("featured homes are the top six verified review counts with stable name tie
   const input = [{ id: "a", name: "A" }, { id: "b", name: "B" }];
   getMostReviewedProperties(input, { b: 4 });
   assert.equal(input[0].id, "a");
+});
+
+test("list ordering defaults to reviews and respects explicit price or name choices", () => {
+  const homes = [
+    { id: "a", name: "Alpha", price_per_night: 300 },
+    { id: "b", name: "Bravo", price_per_night: 100 },
+    { id: "c", name: "Charlie", price_per_night: null },
+    { id: "d", name: "Delta", price_per_night: 200 },
+  ];
+  const counts = { a: 20, b: 5, c: 30, d: 10 };
+  const ids = (sortBy) => sortProperties(homes, counts, sortBy).map((home) => home.id);
+  assert.deepEqual(ids(), ["c", "a", "d", "b"]);
+  assert.deepEqual(ids("price-low"), ["b", "d", "a", "c"]);
+  assert.deepEqual(ids("price-high"), ["a", "d", "b", "c"]);
+  assert.deepEqual(ids("name"), ["a", "b", "c", "d"]);
+  assert.deepEqual(sortProperties(homes.filter((home) => home.price_per_night <= 200 &&
+    home.price_per_night != null), counts).map((home) => home.id), ["d", "b"]);
+  assert.deepEqual(homes.map((home) => home.id), ["a", "b", "c", "d"]);
 });

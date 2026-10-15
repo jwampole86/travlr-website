@@ -5,10 +5,12 @@ import { useFavorites } from "@/hooks/useFavorites";
 import PropertyCard from "@/components/PropertyCard";
 import { createPageUrl } from "@/utils";
 import { publicProperties } from "@/lib/propertyVisibility";
+import { sortProperties } from "@/lib/featuredProperties";
+import propertyReviewCounts from "@/data/propertyReviewCounts.json";
 
 export default function SavedHomes() {
   const { favorites: savedFavorites, clearFavorites } = useFavorites();
-  const favorites = publicProperties(savedFavorites);
+  const favorites = sortProperties(publicProperties(savedFavorites), propertyReviewCounts);
 
   return (
     <div className="min-h-screen bg-white">

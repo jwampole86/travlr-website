@@ -18,6 +18,9 @@ import { Button } from "@/components/ui/button";
 import { format, differenceInCalendarDays, parse } from "date-fns";
 import referenceProperties from "@/data/referenceProperties";
 import { publicProperties } from "@/lib/propertyVisibility";
+import { sortProperties } from "@/lib/featuredProperties";
+import propertyReviewCounts from "@/data/propertyReviewCounts.json";
+import BottomSheetSelect from "@/components/BottomSheetSelect";
 
 const toISO = (d) => (d ? format(d, "yyyy-MM-dd") : null);
 const fromISO = (s) => (s ? parse(s, "yyyy-MM-dd", new Date()) : null);
@@ -40,6 +43,7 @@ export default function SearchResults() {
   });
   const [arrival, setArrival] = useState(fromISO(searchParams.get("arrival")));
   const [departure, setDeparture] = useState(fromISO(searchParams.get("departure")));
+  const [sortBy, setSortBy] = useState("reviews");
 
   const nights = (arrival && departure)
     ? Math.max(0, differenceInCalendarDays(departure, arrival))
@@ -97,8 +101,8 @@ export default function SearchResults() {
         filters.amenities.every(amenity => p.amenities?.includes(amenity))
       );
     }
-    return list;
-  }, [allProperties, filters]);
+    return sortProperties(list, propertyReviewCounts, sortBy);
+  }, [allProperties, filters, sortBy]);
 
   const locations = useMemo(
     () => [...new Set(allProperties.map(p => p.location))].sort(),
@@ -178,6 +182,24 @@ export default function SearchResults() {
           onSearch={handleSearch}
           locations={locations}
         />
+
+        <div className="mb-6 ml-auto max-w-xs">
+          <label htmlFor="property-sort" className="mb-2 block text-xs font-medium uppercase tracking-wider text-gray-600">
+            Sort properties
+          </label>
+          <BottomSheetSelect
+            id="property-sort"
+            value={sortBy}
+            onValueChange={setSortBy}
+            placeholder="Most reviews"
+            options={[
+              { value: "reviews", label: "Most reviews" },
+              { value: "price-low", label: "Price: Low to high" },
+              { value: "price-high", label: "Price: High to low" },
+              { value: "name", label: "Name: A to Z" },
+            ]}
+          />
+        </div>
 
         {isLoading ? (
           <div className="text-center py-12 text-gray-500">Loading properties...</div>

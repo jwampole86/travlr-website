@@ -8,6 +8,8 @@ import AreaGallery from "@/components/AreaGallery";
 import { publicProperties } from "@/lib/propertyVisibility";
 import { getPropertyImages } from "@/lib/propertyImages";
 import referenceProperties from "@/data/referenceProperties";
+import { sortProperties } from "@/lib/featuredProperties";
+import propertyReviewCounts from "@/data/propertyReviewCounts.json";
 
 const AREA_DATA = {
   "Palm Desert": {
@@ -55,7 +57,10 @@ export default function AreaPage() {
         console.warn("Property API returned an invalid response; using the reference catalog.");
       }
       const catalog = Array.isArray(all) && all.length ? all : referenceProperties;
-      return publicProperties(catalog).filter((p) => p.location === decodedName);
+      return sortProperties(
+        publicProperties(catalog).filter((p) => p.location === decodedName),
+        propertyReviewCounts
+      );
     }
   });
   const galleryImages = Array.from(

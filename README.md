@@ -83,6 +83,10 @@ with the highest verified source review counts, with alphabetical ties.
 `src/data/propertyReviewCounts.json` is a small generated index, so homepage
 ranking does not load the full review text.
 Its View more link opens `/SearchResults`, which retains the full public catalog.
+Search, area, and saved-home lists also default to most reviews first. Search
+filters still restrict the matching homes; the Sort properties control lets
+guests override review ordering with price or name ordering. Homes without a
+nightly price remain last in either price order.
 Property cards support previous/next photo navigation without leaving the page.
 Property detail galleries include thumbnails, an all-photo grid, and a
 full-screen viewer with arrow-key navigation and Escape to close.
