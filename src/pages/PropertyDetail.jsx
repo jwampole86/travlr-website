@@ -241,7 +241,7 @@ export default function PropertyDetail() {
 
         <div className="grid lg:grid-cols-3 gap-12">
           {/* Left Column - Gallery & Details */}
-          <div className="lg:col-span-2 space-y-8">
+          <div className="lg:col-span-2 min-w-0 space-y-8">
             {/* Image Gallery */}
             <div className="relative">
               <div className="aspect-[16/10] overflow-hidden rounded-sm">
@@ -249,6 +249,7 @@ export default function PropertyDetail() {
                   src={propertyImages[currentImageIndex]}
                   alt={property.name}
                   className="w-full h-full object-cover"
+                  loading="eager"
                 />
               </div>
               {propertyImages.length > 1 && (

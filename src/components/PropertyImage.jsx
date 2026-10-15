@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-export default function PropertyImage({ src, alt, className = "", onClick }) {
+export default function PropertyImage({ src, alt, className = "", onClick, loading = "lazy" }) {
   const [failed, setFailed] = useState(!src);
 
   useEffect(() => {
@@ -26,7 +26,7 @@ export default function PropertyImage({ src, alt, className = "", onClick }) {
       className={className}
       onClick={onClick}
       onError={() => setFailed(true)}
-      loading="lazy"
+      loading={loading}
     />
   );
 }
