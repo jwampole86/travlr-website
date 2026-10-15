@@ -70,14 +70,17 @@ galleries: `https://casago.com/rentals/1049280/` (60 photos) and
 Whidbey Island Modern Farmhouse uses its 38-photo gallery from
 `https://casago.com/rentals/1047508/`. Skiers Palace uses its 49-photo gallery
 from `https://www.vacasa.com/unit/57757`.
+Tangerine Sky uses its 51-photo gallery from
+`https://casago.com/rentals/1041831/`.
 `getPropertyImages` matches exact slugs (or normalized property names), keeping
 the card, property detail, and area gallery consistent. Refresh each entry from
 its own listing, never from a shared Streamline folder: different homes can
 share a folder. Missing or failed photos show an explicit unavailable state
 instead of a stock house photo. `src/lib/propertyVisibility.js` excludes retired
 listings from public collections and direct detail pages.
-The homepage Vacation Homes section displays the full public reference catalog,
-using these same property photo galleries rather than a separate short list.
+The homepage Vacation Homes section displays the first six public reference
+properties in catalog order, using these same property photo galleries.
+Its View more link opens `/SearchResults`, which retains the full public catalog.
 Property cards support previous/next photo navigation without leaving the page.
 Property detail galleries include thumbnails, an all-photo grid, and a
 full-screen viewer with arrow-key navigation and Escape to close.

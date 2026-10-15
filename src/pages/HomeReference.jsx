@@ -11,7 +11,7 @@ import PropertyCard from "@/components/PropertyCard";
 const logo = "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68f9945aff077ee02e61835e/98433c0c0_35C7376B-41E8-4994-AE14-22D49B92A14A-1-384x384-0.png";
 const video = "https://www.staytravlr.com/wp-content/uploads/2024/01/travelr-vacation-homes-perch.mp4";
 const fallback = getPropertyImages({ name: "Perch" })[0];
-const homes = publicProperties(referenceProperties);
+const homes = publicProperties(referenceProperties).slice(0, 6);
 const areas = [
   ["Palm Desert", "751514953_generated_image.png"], ["La Quinta", "4c80f753e_generated_image.png"], ["Palm Springs", "02f5f1c05_generated_image.png"], ["Indio", "81133c48d_generated_image.png"], ["Coachella", "ccd6f5f1b_generated_image.png"], ["Bermuda Dunes", "d12f1a3dc_generated_image.png"], ["Aspen", "f77e9a8c5_generated_image.png"], ["Breckenridge", "faea4bc3c_generated_image.png"], ["Vail", "623eec1df_generated_image.png"], ["Las Vegas", "33878d44c_generated_image.png"], ["Seattle", "60cdf66c1_generated_image.png"], ["Bellevue", "7fab5aedb_generated_image.png"], ["Miami", "719060a68_generated_image.png"], ["Boston", "c0f5f4c71_generated_image.png"], ["Dallas", "1809200b8_generated_image.png"], ["Salt Lake City", "e8e57b76b_generated_image.png"],
 ].map(([name, file]) => [name, `https://media.base44.com/images/public/68f9945aff077ee02e61835e/${file}`]);
@@ -74,6 +74,14 @@ export default function HomeReference() {
             <PropertyCard property={property} />
           </div>
         ))}
+      </div>
+      <div className="mt-10 text-center">
+        <Link
+          to="/SearchResults"
+          className="inline-flex items-center gap-3 bg-[#c4a574] px-8 py-4 text-xs uppercase tracking-[0.2em] text-white transition-colors hover:bg-[#b89968]"
+        >
+          View more <ArrowRight className="h-4 w-4" />
+        </Link>
       </div>
     </section>
     <section className="py-16 sm:py-24"><div className="mx-auto max-w-[1400px] px-6"><div className="mb-10 text-center md:mb-16"><h3 className="mb-4 text-2xl font-light tracking-[0.2em] text-gray-700 md:text-[36px]">CUSTOMIZED TRAVEL EXPERIENCES</h3><p className="mx-auto max-w-3xl leading-relaxed tracking-wide text-gray-600">From personal chefs to private yoga sessions, spa treatments to guided local tours, we curate bespoke experiences that transform your stay into something extraordinary.</p></div><div className="grid gap-8 md:grid-cols-3">{[[HomeIcon, "Private Chef Services", "Enjoy gourmet meals prepared in your vacation home by talented local chefs"], [Smile, "Wellness & Spa", "In-home massage, yoga sessions, and spa treatments for ultimate relaxation"], [Globe2, "Adventure Tours", "Guided hiking, Jeep tours, and exclusive desert experiences"]].map(([Icon, title, copy]) => <div key={title} className="text-center"><div className="mb-6"><div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#b89968]/10"><Icon className="h-10 w-10 text-[#b89968]" strokeWidth={1.5} /></div></div><h4 className="mb-3 text-lg font-medium tracking-wider text-gray-700">{title}</h4><p className="text-sm leading-relaxed tracking-wide text-gray-600">{copy}</p></div>)}</div></div></section>
