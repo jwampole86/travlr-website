@@ -64,6 +64,9 @@ This repo syncs to Base44 through git, so publish from the dashboard rather than
 
 `src/data/propertyPhotoGalleries.json` contains ordered photo URLs from each
 matching public `https://www.staytravlr.com/vacation-rental/<slug>/` gallery.
+The Mountain Watch and The Watch Tower use their own ordered Casago listing
+galleries: `https://casago.com/rentals/1049280/` (60 photos) and
+`https://casago.com/rentals/1049279/` (48 photos), respectively.
 `getPropertyImages` matches exact slugs (or normalized property names), keeping
 the card, property detail, and area gallery consistent. Refresh each entry from
 its own listing, never from a shared Streamline folder: different homes can
