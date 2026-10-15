@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 import { mergePropertyReviews } from "../src/lib/propertyReviews.js";
+import { getMostReviewedProperties } from "../src/lib/featuredProperties.js";
 
 const review = {
   id: "published",
@@ -51,8 +52,12 @@ test("authorized snapshot has unique, correctly scoped, source-attributed review
   const ids = new Set();
   let count = 0;
   for (const [slug, imported] of Object.entries(data)) {
-    assert.equal(imported.source_url, `https://www.staytravlr.com/vacation-rental/${slug}/`);
-    assert.ok(imported.reviews.length > 0);
+    if (imported.source_name === "TRAVLR") {
+      assert.equal(imported.source_url, `https://www.staytravlr.com/vacation-rental/${slug}/`);
+    } else {
+      assert.match(imported.source_url, /^https:\/\/(?:www\.vacasa\.com\/unit\/|casago\.com\/rentals\/)\d+\/?$/);
+    }
+    assert.ok(imported.source_review_count >= imported.reviews.length);
     for (const item of imported.reviews) {
       assert.equal(item.property_id, imported.property_id);
       assert.ok(!ids.has(item.id));
@@ -64,6 +69,30 @@ test("authorized snapshot has unique, correctly scoped, source-attributed review
       count++;
     }
   }
-  assert.equal(Object.keys(data).length, 24);
+  assert.equal(Object.keys(data).length, 29);
   assert.ok(count >= 2000, `Expected at least 2,000 genuine source reviews, found ${count}`);
+});
+
+test("featured homes are the top six verified review counts with stable name ties", () => {
+  const counts = JSON.parse(readFileSync(
+    new URL("../src/data/propertyReviewCounts.json", import.meta.url), "utf8"
+  ));
+  const listings = JSON.parse(readFileSync(
+    new URL("../src/data/propertyReviews.json", import.meta.url), "utf8"
+  ));
+  const homes = Object.entries(listings).map(([name, listing]) => ({
+    id: listing.property_id, name,
+  }));
+  const featured = getMostReviewedProperties(homes, counts);
+  assert.equal(featured.length, 6);
+  assert.deepEqual(featured.map((home) => counts[home.id]), [176, 135, 133, 132, 127, 123]);
+  assert.deepEqual(featured.map((home) => home.name), [
+    "delaware-estate", "legends", "paramount", "base-camp", "the-summit", "cappella",
+  ]);
+  for (const listing of Object.values(listings)) {
+    assert.equal(counts[listing.property_id], listing.source_review_count);
+  }
+  const input = [{ id: "a", name: "A" }, { id: "b", name: "B" }];
+  getMostReviewedProperties(input, { b: 4 });
+  assert.equal(input[0].id, "a");
 });

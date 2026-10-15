@@ -11,6 +11,13 @@ from html.parser import HTMLParser
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+EXTERNAL_SOURCES = {
+    "tangerine-sky": ("Vacasa", "https://www.vacasa.com/unit/1041831"),
+    "the-mountain-watch": ("Vacasa", "https://www.vacasa.com/unit/1049280"),
+    "the-watch-tower": ("Vacasa", "https://www.vacasa.com/unit/1049279"),
+    "whidbey-island-modern-farmhouse": ("Casago", "https://casago.com/rentals/1047508/"),
+    "skiers-palace": ("Vacasa", "https://www.vacasa.com/unit/57757"),
+}
 
 
 def slugify(value):
@@ -69,7 +76,9 @@ class ReviewParser(HTMLParser):
 
 def import_listing(item):
     slug, property_id = item
-    source_url = f"https://www.staytravlr.com/vacation-rental/{slug}/"
+    source_name, source_url = EXTERNAL_SOURCES.get(
+        slug, ("TRAVLR", f"https://www.staytravlr.com/vacation-rental/{slug}/")
+    )
     page = subprocess.run(
         ["curl", "--fail", "-L", "-sS", "--retry", "2", "--max-time", "45", source_url],
         check=True, capture_output=True, text=True,
@@ -86,6 +95,8 @@ def import_listing(item):
     )
     if not listing or slugify(html.unescape(listing["name"])) != slug:
         raise ValueError(f"{slug}: source listing identity mismatch")
+    if slug in EXTERNAL_SOURCES:
+        return import_external(slug, property_id, source_name, source_url, listing, page)
     section = re.search(
         r'<section id="guest-reviews-index"[^>]*>(.*?)</section>', page, re.S
     )
@@ -120,6 +131,49 @@ def import_listing(item):
     return slug, {
         "property_id": property_id,
         "source_url": source_url,
+        "source_name": source_name,
+        "source_review_count": len(reviews),
+        "imported_on": date.today().isoformat(),
+        "reviews": sorted(reviews.values(), key=lambda r: r["published_date"], reverse=True),
+    }
+
+
+def import_external(slug, property_id, source_name, source_url, listing, page):
+    aggregate = listing.get("aggregateRating")
+    if aggregate:
+        total = int(aggregate["reviewCount"])
+    elif re.search(r"\breview_count:\s*0\s*,", page):
+        total = 0
+    else:
+        raise ValueError(f"{slug}: cannot verify source review count")
+    reviews = {}
+    for raw in listing.get("review", []):
+        published = date.fromisoformat(raw["datePublished"]).isoformat()
+        rating = float(raw["reviewRating"]["ratingValue"])
+        best = float(raw["reviewRating"].get("bestRating", 5))
+        if best != 5 or not 1 <= rating <= 5 or published > date.today().isoformat():
+            raise ValueError(f"{slug}: invalid external review rating or date")
+        review = {
+            "property_id": property_id,
+            "guest_name": html.unescape(raw["author"]["name"]).strip(),
+            "rating": rating,
+            "title": "",
+            "comment": html.unescape(raw["reviewBody"]).strip(),
+            "published_date": published,
+        }
+        if not review["guest_name"] or not review["comment"]:
+            raise ValueError(f"{slug}: missing external review author or text")
+        signature = json.dumps(review, sort_keys=True, ensure_ascii=True)
+        review_id = "published-" + hashlib.sha256(signature.encode()).hexdigest()[:20]
+        reviews[review_id] = {"id": review_id, **review}
+    if len(reviews) > total or (total > 0 and not reviews):
+        raise ValueError(f"{slug}: source review sample does not match published count")
+    print(f"{slug}: {len(reviews)} available reviews of {total} published", flush=True)
+    return slug, {
+        "property_id": property_id,
+        "source_url": source_url,
+        "source_name": source_name,
+        "source_review_count": total,
         "imported_on": date.today().isoformat(),
         "reviews": sorted(reviews.values(), key=lambda r: r["published_date"], reverse=True),
     }
@@ -135,12 +189,20 @@ def main():
     listings = [
         (slug, ids[slug])
         for slug, photos in galleries.items()
-        if photos and photos[0].startswith("https://gallery.streamlinevrs.com/")
+        if slug in EXTERNAL_SOURCES or
+        (photos and photos[0].startswith("https://gallery.streamlinevrs.com/"))
     ]
     with ThreadPoolExecutor(max_workers=3) as executor:
         imported = dict(executor.map(import_listing, listings))
     output = ROOT / "src/data/propertyReviews.json"
     output.write_text(json.dumps(imported, indent=2, ensure_ascii=True) + "\n")
+    counts = {
+        listing["property_id"]: listing["source_review_count"]
+        for listing in imported.values()
+    }
+    (ROOT / "src/data/propertyReviewCounts.json").write_text(
+        json.dumps(counts, indent=2, ensure_ascii=True) + "\n"
+    )
     print(f"Imported {sum(len(p['reviews']) for p in imported.values())} reviews "
           f"across {len(imported)} exact property listings.")
 

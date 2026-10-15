@@ -126,7 +126,7 @@ export default function ReviewSection({ propertyId }) {
             <div className="flex items-center gap-3">
               <StarRating rating={Math.round(averageRating)} />
               <span className="text-lg font-medium text-gray-800">{averageRating}</span>
-              <span className="text-gray-500">({ratedReviews.length} {ratedReviews.length === 1 ? "rating" : "ratings"})</span>
+              <span className="text-gray-500">({ratedReviews.length} {ratedReviews.length === 1 ? "rating" : "ratings"} shown)</span>
             </div>
           )}
         </div>
@@ -244,9 +244,18 @@ export default function ReviewSection({ propertyId }) {
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 text-sm text-[#b89968] underline hover:text-[#a68858]"
         >
-          Read all {importedListing.reviews.length} published reviews on TRAVLR
+          {importedListing.source_name === "TRAVLR"
+            ? `Read all ${importedListing.reviews.length} published reviews on TRAVLR`
+            : `View reviews on ${importedListing.source_name} (${importedListing.source_review_count} published)`}
           <ExternalLink className="h-4 w-4" />
         </a>
+      )}
+      {importedListing && importedListing.source_name !== "TRAVLR" && (
+        <p className="text-sm text-gray-500">
+          {importedListing.source_review_count > 0
+            ? `Showing ${importedListing.reviews.length} reviews publicly available from the source, out of ${importedListing.source_review_count} published.`
+            : `No published reviews were available on this home's ${importedListing.source_name} listing when last checked.`}
+        </p>
       )}
       {(isError || isImportError) && (
         <p role="alert" className="text-sm text-gray-600">
@@ -295,7 +304,7 @@ export default function ReviewSection({ propertyId }) {
                         rel="noopener noreferrer"
                         className="mt-3 inline-flex items-center gap-1 text-xs text-[#b89968] underline hover:text-[#a68858]"
                       >
-                        View original TRAVLR review <ExternalLink className="h-3 w-3" />
+                        View original {review.source_name} review <ExternalLink className="h-3 w-3" />
                       </a>
                     )}
                   </div>

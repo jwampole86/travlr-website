@@ -78,8 +78,10 @@ its own listing, never from a shared Streamline folder: different homes can
 share a folder. Missing or failed photos show an explicit unavailable state
 instead of a stock house photo. `src/lib/propertyVisibility.js` excludes retired
 listings from public collections and direct detail pages.
-The homepage Vacation Homes section displays the first six public reference
-properties in catalog order, using these same property photo galleries.
+The homepage Vacation Homes section displays the six public reference properties
+with the highest verified source review counts, with alphabetical ties.
+`src/data/propertyReviewCounts.json` is a small generated index, so homepage
+ranking does not load the full review text.
 Its View more link opens `/SearchResults`, which retains the full public catalog.
 Property cards support previous/next photo navigation without leaving the page.
 Property detail galleries include thumbnails, an all-photo grid, and a
@@ -94,7 +96,13 @@ Base Camp reviews or booking. Homes without a verified external listing omit
 that link. `ReviewSection` displays only reviews for the selected property and
 reports loading failures explicitly; it does not substitute generic host reviews.
 With the owner's permission, `src/data/propertyReviews.json` contains 2,090
-published reviews from 24 exact official TRAVLR property pages. Each listing
+published reviews from 24 exact official TRAVLR property pages, plus available
+source reviews for Whidbey Island Modern Farmhouse (Casago) and Skiers Palace
+(Vacasa). Tangerine Sky, The Mountain Watch, and The Watch Tower retain verified
+source links and zero source review counts when no reviews are published.
+Source totals are kept separate from the smaller publicly available review
+sample; the UI labels both explicitly and never invents missing review text.
+Each listing
 retains its property ID, source URL, import date, original guest name, publication
 date, rating (or null when unrated), title, and text. Reviews are loaded only on
 property pages, merged with approved website reviews, deduplicated, and shown
@@ -105,7 +113,9 @@ Refresh the authorized snapshot using Python 3 and curl:
 `python3 scripts/import-property-reviews.py`. The importer validates listing
 identity and review metadata, excludes duplicate records, and fails without
 replacing the snapshot if a source cannot be verified. It does not write to
-production entities or import reviews from third-party booking platforms.
+production entities. The owner has also authorized the five explicitly mapped
+Casago/Vacasa sources in the importer. Platform names and exact source links
+remain attached to their imported reviews.
 Run the focused regression checks with
 `node --test scripts/propertyReviews.test.mjs` and
 `PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s scripts -p 'test_*.py'`.

@@ -11,6 +11,7 @@ export const mergePropertyReviews = (propertyId, websiteReviews, importedListing
     ? importedListing.reviews.map((review) => ({
         ...review,
         source_url: importedListing.source_url,
+        source_name: importedListing.source_name || "TRAVLR",
       }))
     : [];
   const seen = new Set();

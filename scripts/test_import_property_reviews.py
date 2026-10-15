@@ -57,6 +57,34 @@ class ImportTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "future-dated"):
             self.parse(source().replace("2025-10-01", "2099-10-01"))
 
+    def test_external_source_counts_are_not_fabricated(self):
+        _, listing = importer.import_external(
+            "test", "home-a", "Vacasa", "https://www.vacasa.com/unit/1",
+            {}, "review_count: 0,",
+        )
+        self.assertEqual(listing["source_review_count"], 0)
+        self.assertEqual(listing["reviews"], [])
+        with self.assertRaisesRegex(ValueError, "cannot verify"):
+            importer.import_external("test", "home-a", "Vacasa", "", {}, "")
+
+    def test_external_review_keeps_platform_attribution_and_text(self):
+        _, listing = importer.import_external(
+            "test", "home-a", "Casago", "https://casago.com/rentals/1/",
+            {
+                "aggregateRating": {"reviewCount": 24},
+                "review": [{
+                    "datePublished": "2025-10-01",
+                    "author": {"name": "Guest"},
+                    "reviewBody": "Clean &amp; comfortable.",
+                    "reviewRating": {"ratingValue": 4, "bestRating": 5},
+                }],
+            }, "",
+        )
+        self.assertEqual(listing["source_review_count"], 24)
+        self.assertEqual(listing["source_name"], "Casago")
+        self.assertEqual(listing["reviews"][0]["comment"], "Clean & comfortable.")
+        self.assertEqual(listing["reviews"][0]["rating"], 4)
+
 
 if __name__ == "__main__":
     unittest.main()

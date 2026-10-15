@@ -1,7 +1,141 @@
 {
+  "tangerine-sky": {
+    "property_id": "6aa0f8640be251ea460dcf81",
+    "source_url": "https://www.vacasa.com/unit/1041831",
+    "source_name": "Vacasa",
+    "source_review_count": 0,
+    "imported_on": "2026-10-15",
+    "reviews": []
+  },
+  "skiers-palace": {
+    "property_id": "6aa0f39ab06a286a7b378553",
+    "source_url": "https://www.vacasa.com/unit/57757",
+    "source_name": "Vacasa",
+    "source_review_count": 24,
+    "imported_on": "2026-10-15",
+    "reviews": [
+      {
+        "id": "published-e4a3ccf1380146c49b07",
+        "property_id": "6aa0f39ab06a286a7b378553",
+        "guest_name": "Gregory C.",
+        "rating": 5.0,
+        "title": "",
+        "comment": "Great house, perfect location, just needed more snow!",
+        "published_date": "2025-12-22"
+      },
+      {
+        "id": "published-32bfab051a54a429ff62",
+        "property_id": "6aa0f39ab06a286a7b378553",
+        "guest_name": "Gregory C.",
+        "rating": 5.0,
+        "title": "",
+        "comment": "We loved the house and the location.",
+        "published_date": "2025-06-17"
+      },
+      {
+        "id": "published-2e2789bf7a658a953154",
+        "property_id": "6aa0f39ab06a286a7b378553",
+        "guest_name": "Daniel T.",
+        "rating": 5.0,
+        "title": "",
+        "comment": "Loved the home! I stayed two years in a row. We did not book year three because of cost. The cost went up nearly 50% from one year to the next. I'm priced out!!!",
+        "published_date": "2025-02-03"
+      },
+      {
+        "id": "published-0e25e86274fbc0c37932",
+        "property_id": "6aa0f39ab06a286a7b378553",
+        "guest_name": "Gireesh S.",
+        "rating": 5.0,
+        "title": "",
+        "comment": ".",
+        "published_date": "2024-04-02"
+      },
+      {
+        "id": "published-7fbb59a8f269d6e912b9",
+        "property_id": "6aa0f39ab06a286a7b378553",
+        "guest_name": "Jonathan B.",
+        "rating": 5.0,
+        "title": "",
+        "comment": "Amazing place! Couldn't be a better spot in Breckenridge!",
+        "published_date": "2024-02-20"
+      }
+    ]
+  },
+  "whidbey-island-modern-farmhouse": {
+    "property_id": "6aa0f5609820705fd6a78a41",
+    "source_url": "https://casago.com/rentals/1047508/",
+    "source_name": "Casago",
+    "source_review_count": 46,
+    "imported_on": "2026-10-15",
+    "reviews": [
+      {
+        "id": "published-a50d9f7dfd7b6385f277",
+        "property_id": "6aa0f5609820705fd6a78a41",
+        "guest_name": "Alexander Y",
+        "rating": 5.0,
+        "title": "",
+        "comment": "Incredible location! Fantastic private beach from which we saw fish, crabs, seals, porpoise, Bald Eagles and even a Gray Whale!",
+        "published_date": "2026-08-22"
+      },
+      {
+        "id": "published-c585b239a9ac341ec1ee",
+        "property_id": "6aa0f5609820705fd6a78a41",
+        "guest_name": "Sarine R",
+        "rating": 5.0,
+        "title": "",
+        "comment": "Outstanding property! As advertised. Plenty of space for congregating/solo time and for children to run and play. Bonus: beach access with the gorgeous cove and saw a gray whale (twice) and a bald eagle! Magical!",
+        "published_date": "2026-08-06"
+      },
+      {
+        "id": "published-217b551c692be4ec5479",
+        "property_id": "6aa0f5609820705fd6a78a41",
+        "guest_name": "James S",
+        "rating": 4.0,
+        "title": "",
+        "comment": "The check in procedure was easy. The house was very clean except for the basement bathroom, under the beds and bunks may have been slept in before. The outside fire pit needed propane and it was brought to us in a very timely manner. The grill was very high quality and worked well. The view was outstanding and a nice easy path to the water. The kitchen was equipped very nicely and a very ample supply of condiments was available. A house instruction book should have been available. None of us could find the thermostat and when we found it, it took a while to figure out how to use it. The sink in the downstairs bathroom had a mild leak and we had to put a wash cloth around it. Overall a very good property and would recommend it!",
+        "published_date": "2026-07-12"
+      },
+      {
+        "id": "published-b0ce2d07eff55997659a",
+        "property_id": "6aa0f5609820705fd6a78a41",
+        "guest_name": "Emily L",
+        "rating": 5.0,
+        "title": "",
+        "comment": "Perfect venue for our family of 11 - ample bedrooms/baths, HUGE cooking area and great room, everything top notch. Clean and new, AMAZING VIEWS and BEACH ACCESS. We all wanted to stay longer. Oh, and huge extra credit for the bespoke antiques which are layered throughout this newly renovated home. Serious design and character :)",
+        "published_date": "2026-06-09"
+      },
+      {
+        "id": "published-51ac07d45046757f83bd",
+        "property_id": "6aa0f5609820705fd6a78a41",
+        "guest_name": "AUSTIN S",
+        "rating": 5.0,
+        "title": "",
+        "comment": "Beautiful property on Whidbey Island in between Coupeville and Langley. Stunning waterfront views and a modern house make this house perfect for large groups. Would stay again!",
+        "published_date": "2025-11-03"
+      }
+    ]
+  },
+  "the-mountain-watch": {
+    "property_id": "6aa0f8640be251ea460dcf82",
+    "source_url": "https://www.vacasa.com/unit/1049280",
+    "source_name": "Vacasa",
+    "source_review_count": 0,
+    "imported_on": "2026-10-15",
+    "reviews": []
+  },
+  "the-watch-tower": {
+    "property_id": "6aa0f8640be251ea460dcf83",
+    "source_url": "https://www.vacasa.com/unit/1049279",
+    "source_name": "Vacasa",
+    "source_review_count": 0,
+    "imported_on": "2026-10-15",
+    "reviews": []
+  },
   "base-camp": {
     "property_id": "6aa08aa72e9dc74722943edf",
     "source_url": "https://www.staytravlr.com/vacation-rental/base-camp/",
+    "source_name": "TRAVLR",
+    "source_review_count": 132,
     "imported_on": "2026-10-15",
     "reviews": [
       {
@@ -1197,6 +1331,8 @@
   "cappella": {
     "property_id": "6aa08aa72e9dc74722943ee0",
     "source_url": "https://www.staytravlr.com/vacation-rental/cappella/",
+    "source_name": "TRAVLR",
+    "source_review_count": 123,
     "imported_on": "2026-10-15",
     "reviews": [
       {
@@ -2311,6 +2447,8 @@
   "casa-agave": {
     "property_id": "6aa08aa72e9dc74722943ee1",
     "source_url": "https://www.staytravlr.com/vacation-rental/casa-agave/",
+    "source_name": "TRAVLR",
+    "source_review_count": 114,
     "imported_on": "2026-10-15",
     "reviews": [
       {
@@ -3344,6 +3482,8 @@
   "casa-del-sol": {
     "property_id": "6aa08aa72e9dc74722943ee2",
     "source_url": "https://www.staytravlr.com/vacation-rental/casa-del-sol/",
+    "source_name": "TRAVLR",
+    "source_review_count": 97,
     "imported_on": "2026-10-15",
     "reviews": [
       {
@@ -4224,6 +4364,8 @@
   "casa-luna": {
     "property_id": "6aa08aa72e9dc74722943ee3",
     "source_url": "https://www.staytravlr.com/vacation-rental/casa-luna/",
+    "source_name": "TRAVLR",
+    "source_review_count": 39,
     "imported_on": "2026-10-15",
     "reviews": [
       {
@@ -4582,6 +4724,8 @@
   "casa-mara": {
     "property_id": "6aa0b39f2218f8fce220bfb5",
     "source_url": "https://www.staytravlr.com/vacation-rental/casa-mara/",
+    "source_name": "TRAVLR",
+    "source_review_count": 100,
     "imported_on": "2026-10-15",
     "reviews": [
       {
@@ -5489,6 +5633,8 @@
   "casa-roca": {
     "property_id": "6aa0b39f2218f8fce220bfb4",
     "source_url": "https://www.staytravlr.com/vacation-rental/casa-roca/",
+    "source_name": "TRAVLR",
+    "source_review_count": 65,
     "imported_on": "2026-10-15",
     "reviews": [
       {
@@ -6081,6 +6227,8 @@
   "casa-tierra": {
     "property_id": "6aa08aa72e9dc74722943ee4",
     "source_url": "https://www.staytravlr.com/vacation-rental/casa-tierra/",
+    "source_name": "TRAVLR",
+    "source_review_count": 77,
     "imported_on": "2026-10-15",
     "reviews": [
       {
@@ -6781,6 +6929,8 @@
   "delaware-estate": {
     "property_id": "6aa0b39f2218f8fce220bfb8",
     "source_url": "https://www.staytravlr.com/vacation-rental/delaware-estate/",
+    "source_name": "TRAVLR",
+    "source_review_count": 176,
     "imported_on": "2026-10-15",
     "reviews": [
       {
@@ -8372,6 +8522,8 @@
   "indah": {
     "property_id": "6aa0b39f2218f8fce220bfb9",
     "source_url": "https://www.staytravlr.com/vacation-rental/indah/",
+    "source_name": "TRAVLR",
+    "source_review_count": 18,
     "imported_on": "2026-10-15",
     "reviews": [
       {
@@ -8541,6 +8693,8 @@
   "isla": {
     "property_id": "6aa0b39f2218f8fce220bfba",
     "source_url": "https://www.staytravlr.com/vacation-rental/isla/",
+    "source_name": "TRAVLR",
+    "source_review_count": 37,
     "imported_on": "2026-10-15",
     "reviews": [
       {
@@ -8881,6 +9035,8 @@
   "jaguar-estate": {
     "property_id": "6aa0b39f2218f8fce220bfbb",
     "source_url": "https://www.staytravlr.com/vacation-rental/jaguar-estate/",
+    "source_name": "TRAVLR",
+    "source_review_count": 58,
     "imported_on": "2026-10-15",
     "reviews": [
       {
@@ -9410,6 +9566,8 @@
   "legends": {
     "property_id": "6aa0b39f2218f8fce220bfbd",
     "source_url": "https://www.staytravlr.com/vacation-rental/legends/",
+    "source_name": "TRAVLR",
+    "source_review_count": 135,
     "imported_on": "2026-10-15",
     "reviews": [
       {
@@ -10632,6 +10790,8 @@
   "paramount": {
     "property_id": "6aa0b39f2218f8fce220bfbe",
     "source_url": "https://www.staytravlr.com/vacation-rental/paramount/",
+    "source_name": "TRAVLR",
+    "source_review_count": 133,
     "imported_on": "2026-10-15",
     "reviews": [
       {
@@ -11836,6 +11996,8 @@
   "perch": {
     "property_id": "6aa0b39f2218f8fce220bfbf",
     "source_url": "https://www.staytravlr.com/vacation-rental/perch/",
+    "source_name": "TRAVLR",
+    "source_review_count": 77,
     "imported_on": "2026-10-15",
     "reviews": [
       {
@@ -12536,6 +12698,8 @@
   "riviera": {
     "property_id": "6aa0b39f2218f8fce220bfc0",
     "source_url": "https://www.staytravlr.com/vacation-rental/riviera/",
+    "source_name": "TRAVLR",
+    "source_review_count": 37,
     "imported_on": "2026-10-15",
     "reviews": [
       {
@@ -12876,6 +13040,8 @@
   "santal-estate": {
     "property_id": "6aa0b39f2218f8fce220bfc1",
     "source_url": "https://www.staytravlr.com/vacation-rental/santal-estate/",
+    "source_name": "TRAVLR",
+    "source_review_count": 123,
     "imported_on": "2026-10-15",
     "reviews": [
       {
@@ -13990,6 +14156,8 @@
   "skyview": {
     "property_id": "6aa0b39f2218f8fce220bfb6",
     "source_url": "https://www.staytravlr.com/vacation-rental/skyview/",
+    "source_name": "TRAVLR",
+    "source_review_count": 63,
     "imported_on": "2026-10-15",
     "reviews": [
       {
@@ -14564,6 +14732,8 @@
   "solaris": {
     "property_id": "6aa0b39f2218f8fce220bfb3",
     "source_url": "https://www.staytravlr.com/vacation-rental/solaris/",
+    "source_name": "TRAVLR",
+    "source_review_count": 35,
     "imported_on": "2026-10-15",
     "reviews": [
       {
@@ -14886,6 +15056,8 @@
   "the-dream-house": {
     "property_id": "6aa0b39f2218f8fce220bfc2",
     "source_url": "https://www.staytravlr.com/vacation-rental/the-dream-house/",
+    "source_name": "TRAVLR",
+    "source_review_count": 73,
     "imported_on": "2026-10-15",
     "reviews": [
       {
@@ -15550,6 +15722,8 @@
   "the-summit": {
     "property_id": "6aa0b39f2218f8fce220bfc3",
     "source_url": "https://www.staytravlr.com/vacation-rental/the-summit/",
+    "source_name": "TRAVLR",
+    "source_review_count": 127,
     "imported_on": "2026-10-15",
     "reviews": [
       {
@@ -16700,6 +16874,8 @@
   "villa-bella": {
     "property_id": "6aa0b39f2218f8fce220bfc4",
     "source_url": "https://www.staytravlr.com/vacation-rental/villa-bella/",
+    "source_name": "TRAVLR",
+    "source_review_count": 83,
     "imported_on": "2026-10-15",
     "reviews": [
       {
@@ -17454,6 +17630,8 @@
   "villa-lago": {
     "property_id": "6aa0b39f2218f8fce220bfb7",
     "source_url": "https://www.staytravlr.com/vacation-rental/villa-lago/",
+    "source_name": "TRAVLR",
+    "source_review_count": 115,
     "imported_on": "2026-10-15",
     "reviews": [
       {
@@ -18496,6 +18674,8 @@
   "lawrence-estate": {
     "property_id": "6aa0b39f2218f8fce220bfbc",
     "source_url": "https://www.staytravlr.com/vacation-rental/lawrence-estate/",
+    "source_name": "TRAVLR",
+    "source_review_count": 53,
     "imported_on": "2026-10-15",
     "reviews": [
       {

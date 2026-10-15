@@ -7,11 +7,13 @@ import { publicProperties } from "@/lib/propertyVisibility";
 import { getPropertyImages } from "@/lib/propertyImages";
 import referenceProperties from "@/data/referenceProperties";
 import PropertyCard from "@/components/PropertyCard";
+import propertyReviewCounts from "@/data/propertyReviewCounts.json";
+import { getMostReviewedProperties } from "@/lib/featuredProperties";
 
 const logo = "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68f9945aff077ee02e61835e/98433c0c0_35C7376B-41E8-4994-AE14-22D49B92A14A-1-384x384-0.png";
 const video = "https://www.staytravlr.com/wp-content/uploads/2024/01/travelr-vacation-homes-perch.mp4";
 const fallback = getPropertyImages({ name: "Perch" })[0];
-const homes = publicProperties(referenceProperties).slice(0, 6);
+const homes = getMostReviewedProperties(publicProperties(referenceProperties), propertyReviewCounts);
 const areas = [
   ["Palm Desert", "751514953_generated_image.png"], ["La Quinta", "4c80f753e_generated_image.png"], ["Palm Springs", "02f5f1c05_generated_image.png"], ["Indio", "81133c48d_generated_image.png"], ["Coachella", "ccd6f5f1b_generated_image.png"], ["Bermuda Dunes", "d12f1a3dc_generated_image.png"], ["Aspen", "f77e9a8c5_generated_image.png"], ["Breckenridge", "faea4bc3c_generated_image.png"], ["Vail", "623eec1df_generated_image.png"], ["Las Vegas", "33878d44c_generated_image.png"], ["Seattle", "60cdf66c1_generated_image.png"], ["Bellevue", "7fab5aedb_generated_image.png"], ["Miami", "719060a68_generated_image.png"], ["Boston", "c0f5f4c71_generated_image.png"], ["Dallas", "1809200b8_generated_image.png"], ["Salt Lake City", "e8e57b76b_generated_image.png"],
 ].map(([name, file]) => [name, `https://media.base44.com/images/public/68f9945aff077ee02e61835e/${file}`]);
@@ -67,11 +69,14 @@ export default function HomeReference() {
     </section>
     <section className="border-b border-[#ece9e2] px-5 py-10"><div className="mx-auto grid max-w-[1100px] grid-cols-3 items-center gap-6 sm:grid-cols-6">{partners.map(([alt, src, href]) => <a key={alt} href={href} target="_blank" rel="noopener noreferrer" aria-label={alt} className="flex h-16 items-center justify-center opacity-70 grayscale transition-all duration-300 hover:grayscale-0 hover:opacity-100"><img src={src} alt={alt} className="max-h-16 max-w-full object-contain" /></a>)}</div></section>
     <section className="bg-[#f7f6f3] py-16 sm:py-24">
-      <Heading title="Vacation Homes">Discover our hand-picked selection of luxury vacation rentals</Heading>
+      <Heading title="Vacation Homes">Discover six of our most-reviewed luxury vacation rentals</Heading>
       <div className="mx-auto grid max-w-[1380px] gap-6 px-5 sm:px-8 md:grid-cols-2 lg:grid-cols-3 lg:px-12">
         {homes.map((property) => (
           <div key={property.id} className="min-w-0 bg-white p-4 shadow-sm">
             <PropertyCard property={property} />
+            <p className="mt-3 text-sm text-gray-500">
+              {propertyReviewCounts[property.id]} published reviews
+            </p>
           </div>
         ))}
       </div>
