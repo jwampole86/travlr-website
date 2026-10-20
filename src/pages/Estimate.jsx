@@ -24,6 +24,9 @@ import {
   Scale,
 } from "lucide-react";
 
+// Where the accurate estimate lives. The visitor's address is passed in the link and the estimate starts on its own.
+const ACCURATE_ESTIMATE_URL = "https://prospect.staytrvlr.com/estimate";
+
 const selectClass =
   "w-full h-9 rounded-md border border-input bg-background px-3 text-sm focus:outline-none focus:ring-1 focus:ring-ring";
 
@@ -188,10 +191,13 @@ export default function Estimate() {
     setShowSuggestions(false);
   };
 
+  // The estimate itself is calculated by the TRAVLR estimate service, so the numbers here always match the ones in our text messages and
+  // emails. The model-generated figures above are no longer shown to visitors.
   const handleEstimate = (e) => {
     e.preventDefault();
     if (!selectedAddress) return;
-    estimateMutation.mutate(selectedAddress);
+    const address = selectedAddress.replace(/,\s*(USA|United States)$/i, "");
+    window.location.href = `${ACCURATE_ESTIMATE_URL}?address=${encodeURIComponent(address)}&utm_source=travlr_website&utm_medium=estimate_page`;
   };
 
   // Terms acceptance is required; SMS consent is optional and not a condition.
